@@ -16,9 +16,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Note:
  *
  * Note: the configuration of the servos is such that:
- *   As the arm servo approaches 0, the arm position moves up (away from the floor).
- *   As the claw servo approaches 0, the claw opens up (drops the game element).
  */
+
 public class hardware2018
 {
     /* Public OpMode members. */
@@ -30,7 +29,8 @@ public class hardware2018
     public DcMotor  rightDriveRear  = null;
 
     public DcMotor  climbMotor  = null;
-
+    
+    public DcMotor  armExtentionMotor  = null;
     public DcMotor  armJointMotor = null;
     public DcMotor  armWheelMotor = null;
 
@@ -52,13 +52,16 @@ public class hardware2018
 
         // the motors at the base, hardware names should use the numbering on the robot.
         // Check if this is working correctly
-        leftDriveFront  = hwMap.get(DcMotor.class, "drive0");
-        leftDriveRear   = hwMap.get(DcMotor.class, "drive1");
-        rightDriveFront = hwMap.get(DcMotor.class, "drive2");
-        rightDriveRear  = hwMap.get(DcMotor.class, "drive3");
+        leftDriveFront  = hwMap.get(DcMotor.class, "driveLeftFrontMotor");
+        leftDriveRear   = hwMap.get(DcMotor.class, "driveLeftRearMotor");
+        rightDriveFront = hwMap.get(DcMotor.class, "driveRightFrontMotor");
+        rightDriveRear  = hwMap.get(DcMotor.class, "driveRightRear");
         climbMotor      = hwMap.get(DcMotor.class, "climbMotor");
         armJointMotor   = hwMap.get(DcMotor.class, "armJointMotor");
-
+	armExtentionMotor = hwMap.get(DcMotor.class, "armExtentionMotor");
+	armWheelMotor = hwMap.get(DcMotor.class, "armWheelMotor");
+	
+	
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
         leftDriveRear.setDirection(DcMotor.Direction.REVERSE);
@@ -69,16 +72,19 @@ public class hardware2018
         rightDriveRear.setPower(0);
         climbMotor.setPower(0);
         armJointMotor.setPower(0);
-
+	armExtentionMotor.setPower(0);
+	armWheelMotor.setPower(0);
+	
         // Set all motors to run with encoders.
-        // Use RUN_WITHOUT_ENCODER if encoders are not installed.
-        leftDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftDriveRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightDriveFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightDriveRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        climbMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        armJointMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
+        // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
+	// We may need to get rid of the run using encoder things because it could be causing problems.
+        leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        climbMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armWheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+	armExtentionMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
