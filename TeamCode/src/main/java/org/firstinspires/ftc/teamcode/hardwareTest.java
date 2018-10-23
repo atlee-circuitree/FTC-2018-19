@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
-@Disabled
+
 public class hardwareTest extends LinearOpMode {
 
     
@@ -81,6 +81,7 @@ public class hardwareTest extends LinearOpMode {
             double rightPowerF;
             double rightPowerR;
 
+	    double combineSpeed;
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
@@ -94,6 +95,17 @@ public class hardwareTest extends LinearOpMode {
             rightPowerR   = Range.clip(drive - turn, -1.0, 1.0) ;
 
 
+	    //get data for combine speed
+	    if (gamepad1.right_stick_button > .1) {
+		combineSpeed = .9;
+	    }
+	    if (gamepad1.left_stick_button < -.1){
+		combineSpeed -.9;
+	    }
+	    
+	    
+	    
+
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
@@ -105,6 +117,9 @@ public class hardwareTest extends LinearOpMode {
             robot.rightDriveFront.setPower(rightPowerF);
             robot.rightDriveRear.setPower(rightPowerR);
 
+	    robot.armWheelMotor.setPower(combineSpeed);
+	    
+	    
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
