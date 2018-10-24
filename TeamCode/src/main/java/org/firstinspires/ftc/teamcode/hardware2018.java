@@ -63,8 +63,8 @@ public class hardware2018
 	
 	
         //ensures motors are rotating in the correct direction.  One side must always be reversed
-        leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
-        leftDriveRear.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveRear.setDirection(DcMotor.Direction.REVERSE);
         // Set all motors to zero power
         leftDriveFront.setPower(0);
         leftDriveRear.setPower(0);
@@ -72,8 +72,8 @@ public class hardware2018
         rightDriveRear.setPower(0);
         climbMotor.setPower(0);
         armJointMotor.setPower(0);
-	    armExtendMotor.setPower(0);
-	    armWheelMotor.setPower(0);
+	armExtendMotor.setPower(0);
+	armWheelMotor.setPower(0);
 	
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
@@ -85,6 +85,6 @@ public class hardware2018
         climbMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armWheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-	    armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+	armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
