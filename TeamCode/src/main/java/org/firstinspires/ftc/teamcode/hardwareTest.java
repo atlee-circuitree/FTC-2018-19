@@ -55,11 +55,12 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
 
 public class hardwareTest extends LinearOpMode {
-
+   
     
     // Declare OpMode members.
     hardware2018    robot = new hardware2018();
-
+    private ElapsedTime runtime = new ElapsedTime();
+    
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");

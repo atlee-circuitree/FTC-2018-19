@@ -58,8 +58,8 @@ public class hardware2018
         rightDriveRear  = hwMap.get(DcMotor.class, "driveRightRear");
         climbMotor      = hwMap.get(DcMotor.class, "climbMotor");
         armJointMotor   = hwMap.get(DcMotor.class, "armJointMotor");
-	armExtentionMotor = hwMap.get(DcMotor.class, "armExtentionMotor");
-	armWheelMotor = hwMap.get(DcMotor.class, "armWheelMotor");
+	    armExtentionMotor = hwMap.get(DcMotor.class, "armExtentionMotor");
+	    armWheelMotor = hwMap.get(DcMotor.class, "armWheelMotor");
 	
 	
         //ensures motors are rotating in the correct direction.  One side must always be reversed
@@ -72,8 +72,8 @@ public class hardware2018
         rightDriveRear.setPower(0);
         climbMotor.setPower(0);
         armJointMotor.setPower(0);
-	armExtentionMotor.setPower(0);
-	armWheelMotor.setPower(0);
+	    armExtentionMotor.setPower(0);
+	    armWheelMotor.setPower(0);
 	
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
@@ -85,6 +85,6 @@ public class hardware2018
         climbMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armWheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-	armExtentionMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+	    armExtentionMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
