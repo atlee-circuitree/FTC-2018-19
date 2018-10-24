@@ -55,7 +55,7 @@ public class hardware2018
         leftDriveFront  = hwMap.get(DcMotor.class, "driveLeftFrontMotor");
         leftDriveRear   = hwMap.get(DcMotor.class, "driveLeftRearMotor");
         rightDriveFront = hwMap.get(DcMotor.class, "driveRightFrontMotor");
-        rightDriveRear  = hwMap.get(DcMotor.class, "driveRightRear");
+        rightDriveRear  = hwMap.get(DcMotor.class, "driveRightRearMotor");
         climbMotor      = hwMap.get(DcMotor.class, "climbMotor");
         armJointMotor   = hwMap.get(DcMotor.class, "armJointMotor");
 	    armExtentionMotor = hwMap.get(DcMotor.class, "armExtentionMotor");
