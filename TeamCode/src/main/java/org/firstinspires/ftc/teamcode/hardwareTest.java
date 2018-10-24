@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="hardwareTest 2018", group="Linear Opmode")
 
 public class hardwareTest extends LinearOpMode {
    
@@ -82,7 +82,7 @@ public class hardwareTest extends LinearOpMode {
             double rightPowerF;
             double rightPowerR;
 
-	    double combineSpeed;
+	    double combineSpeed = 0;
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
@@ -97,12 +97,16 @@ public class hardwareTest extends LinearOpMode {
 
 
 	    //get data for combine speed
-	    if (gamepad1.right_stick_button > .1) {
+	     if (!gamepad1.left_stick_button && !gamepad1.right_stick_button){
+		combineSpeed = 0;
+	     }
+	     else if (gamepad1.right_stick_button) {
 		combineSpeed = .9;
 	    }
-	    if (gamepad1.left_stick_button < -.1){
-		combineSpeed -.9;
-	    }
+	     else if (gamepad1.left_stick_button){
+		    combineSpeed = -.9;
+		}
+	    
 	    
 	    
 	    
@@ -118,12 +122,12 @@ public class hardwareTest extends LinearOpMode {
             robot.rightDriveFront.setPower(rightPowerF);
             robot.rightDriveRear.setPower(rightPowerR);
 
-	    robot.armWheelMotor.setPower(combineSpeed);
+	    robot.armCombineMotor.setPower(combineSpeed);
 	    
 	    
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+           // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
     }

@@ -32,7 +32,7 @@ public class hardware2018
     
     public DcMotor  armExtendMotor  = null;
     public DcMotor  armJointMotor = null;
-    public DcMotor  armWheelMotor = null;
+    public DcMotor  armCombineMotor = null;
 
 
     /* Local OpMode members. */
@@ -73,7 +73,7 @@ public class hardware2018
         climbMotor.setPower(0);
         armJointMotor.setPower(0);
 	armExtendMotor.setPower(0);
-	armWheelMotor.setPower(0);
+	armCombineMotor.setPower(0);
 	
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
@@ -84,7 +84,7 @@ public class hardware2018
         rightDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         climbMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armWheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armCombineMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 	armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
