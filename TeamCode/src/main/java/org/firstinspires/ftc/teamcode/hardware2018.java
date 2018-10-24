@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Servo ;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -30,7 +30,7 @@ public class hardware2018
 
     public DcMotor  climbMotor  = null;
     
-    public DcMotor  armExtentionMotor  = null;
+    public DcMotor  armExtendMotor  = null;
     public DcMotor  armJointMotor = null;
     public DcMotor  armWheelMotor = null;
 
@@ -58,8 +58,8 @@ public class hardware2018
         rightDriveRear  = hwMap.get(DcMotor.class, "driveRightRearMotor");
         climbMotor      = hwMap.get(DcMotor.class, "climbMotor");
         armJointMotor   = hwMap.get(DcMotor.class, "armJointMotor");
-	    armExtentionMotor = hwMap.get(DcMotor.class, "armExtentionMotor");
-	    armWheelMotor = hwMap.get(DcMotor.class, "armWheelMotor");
+	    armExtendMotor = hwMap.get(DcMotor.class, "armExtendMotor");
+	    armCombineMotor = hwMap.get(DcMotor.class, "armWheelMotor");
 	
 	
         //ensures motors are rotating in the correct direction.  One side must always be reversed
@@ -72,7 +72,7 @@ public class hardware2018
         rightDriveRear.setPower(0);
         climbMotor.setPower(0);
         armJointMotor.setPower(0);
-	    armExtentionMotor.setPower(0);
+	    armExtendMotor.setPower(0);
 	    armWheelMotor.setPower(0);
 	
         // Set all motors to run with encoders.
@@ -85,6 +85,6 @@ public class hardware2018
         climbMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armWheelMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-	    armExtentionMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+	    armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
