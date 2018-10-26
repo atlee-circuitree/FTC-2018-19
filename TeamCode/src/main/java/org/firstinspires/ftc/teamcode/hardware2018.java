@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -32,7 +33,8 @@ public class hardware2018 {
     public DcMotor armExtendMotor = null;
     public DcMotor armJointMotor = null;
     public DcMotor armCombineMotor = null;
-
+    public Servo armCombineServo = null;
+    public Servo armReleaseServo = null;
 
     /* Local OpMode members. */
     HardwareMap hwMap = null;
@@ -59,7 +61,8 @@ public class hardware2018 {
         armJointMotor = hwMap.get(DcMotor.class, "armJointMotor");
         armExtendMotor = hwMap.get(DcMotor.class, "armExtendMotor");
         armCombineMotor = hwMap.get(DcMotor.class, "armWheelMotor");
-
+        armCombineServo = hwMap.get(Servo.class, "armCombineServo");
+        armReleaseServo = hwMap.get(Servo.class, "armReleaseServo");
 
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
@@ -73,6 +76,7 @@ public class hardware2018 {
         armJointMotor.setPower(0);
         armExtendMotor.setPower(0);
         armCombineMotor.setPower(0);
+
 
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
