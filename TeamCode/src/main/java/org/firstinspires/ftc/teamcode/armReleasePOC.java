@@ -33,10 +33,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -44,29 +44,32 @@ import com.qualcomm.robotcore.util.Range;
  * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
  * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
  * class is instantiated on the Robot Controller and executed.
- *
+ * <p>
  * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
  * It includes all the skeletal structure that all linear OpModes contain.
- *
+ * <p>
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="hardwareTest 2018", group="Linear Opmode")
+@TeleOp(name = "Arm Release Test 2018", group = "Linear Opmode")
 
-public class hardwareTest extends LinearOpMode {
-   
-    
+public class armReleasePOC extends LinearOpMode {
+
+
     // Declare OpMode members.
-    hardware2018    robot = new hardware2018();
+    hardware2018 robot = new hardware2018();
     private ElapsedTime runtime = new ElapsedTime();
-    
+    long armReleaseEndTime = 0;
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         robot.init(hardwareMap);
+
+
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -82,34 +85,28 @@ public class hardwareTest extends LinearOpMode {
             double rightPowerF;
             double rightPowerR;
 
-	    double combineSpeed = 0;
+            double combineSpeed = 0;
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
-            leftPowerF    = Range.clip(drive + turn, -1.0, 1.0) ;
-            leftPowerR    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPowerF  = Range.clip(drive - turn, -1.0, 1.0) ;
-            rightPowerR   = Range.clip(drive - turn, -1.0, 1.0) ;
+            double turn = gamepad1.right_stick_x;
+            leftPowerF = Range.clip(drive + turn, -1.0, 1.0);
+            leftPowerR = Range.clip(drive + turn, -1.0, 1.0);
+            rightPowerF = Range.clip(drive - turn, -1.0, 1.0);
+            rightPowerR = Range.clip(drive - turn, -1.0, 1.0);
 
 
-	    //get data for combine speed
-	     if (!gamepad1.left_stick_button && !gamepad1.right_stick_button){
-		combineSpeed = 0;
-	     }
-	     else if (gamepad1.right_stick_button) {
-		combineSpeed = .9;
-	    }
-	     else if (gamepad1.left_stick_button){
-		    combineSpeed = -.9;
-		}
-	    
-	    
-	    
-	    
+            //get data for combine speed
+            if (!gamepad1.left_stick_button && !gamepad1.right_stick_button) {
+                combineSpeed = 0;
+            } else if (gamepad1.right_stick_button) {
+                combineSpeed = .9;
+            } else if (gamepad1.left_stick_button) {
+                combineSpeed = -.9;
+            }
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
@@ -122,12 +119,23 @@ public class hardwareTest extends LinearOpMode {
             robot.rightDriveFront.setPower(rightPowerF);
             robot.rightDriveRear.setPower(rightPowerR);
 
-	    robot.armCombineMotor.setPower(combineSpeed);
-	    
-	    
+            robot.armCombineMotor.setPower(combineSpeed);
+
+            if(gamepad1.a && armReleaseEndTime == 0)
+            {
+                armReleaseEndTime = runtime.time(TimeUnit.MILLISECONDS) + 2000;
+                robot.armReleaseServo.setPosition(0);
+            }
+            if(armReleaseEndTime < runtime.time(TimeUnit.MILLISECONDS))
+            {
+                armReleaseEndTime = 0;
+                robot.armReleaseServo.setPosition(1);
+            }
+
+
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-           // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
     }
