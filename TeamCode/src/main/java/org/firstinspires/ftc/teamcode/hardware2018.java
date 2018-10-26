@@ -3,41 +3,40 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo ;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This is NOT an opmode.
- *
+ * <p>
  * This class can be used to define all the specific hardware for a single robot.
  * In this case that robot is our 2018 bot.
- *
+ * <p>
  * This hardware class assumes the following device names have been configured on the robot:
  * Note:
- *
+ * <p>
  * Note: the configuration of the servos is such that:
  */
 
-public class hardware2018
-{
+public class hardware2018 {
     /* Public OpMode members. */
 
     //motors at base that power wheels
-    public DcMotor  leftDriveFront   = null;
-    public DcMotor  leftDriveRear    = null;
-    public DcMotor  rightDriveFront  = null;
-    public DcMotor  rightDriveRear  = null;
+    public DcMotor leftDriveFront = null;
+    public DcMotor leftDriveRear = null;
+    public DcMotor rightDriveFront = null;
+    public DcMotor rightDriveRear = null;
 
-    public DcMotor  climbMotor  = null;
-    
-    public DcMotor  armExtendMotor  = null;
-    public DcMotor  armJointMotor = null;
-    public DcMotor  armCombineMotor = null;
+    public DcMotor climbMotor = null;
+
+    public DcMotor armExtendMotor = null;
+    public DcMotor armJointMotor = null;
+    public DcMotor armCombineMotor = null;
 
 
     /* Local OpMode members. */
-    HardwareMap hwMap  = null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private ElapsedTime period = new ElapsedTime();
 
     /* Constructor */
     public hardware2018() {
@@ -52,16 +51,16 @@ public class hardware2018
 
         // the motors at the base, hardware names should use the numbering on the robot.
         // Check if this is working correctly
-        leftDriveFront  = hwMap.get(DcMotor.class, "driveLeftFrontMotor");
-        leftDriveRear   = hwMap.get(DcMotor.class, "driveLeftRearMotor");
+        leftDriveFront = hwMap.get(DcMotor.class, "driveLeftFrontMotor");
+        leftDriveRear = hwMap.get(DcMotor.class, "driveLeftRearMotor");
         rightDriveFront = hwMap.get(DcMotor.class, "driveRightFrontMotor");
-        rightDriveRear  = hwMap.get(DcMotor.class, "driveRightRearMotor");
-        climbMotor      = hwMap.get(DcMotor.class, "climbMotor");
-        armJointMotor   = hwMap.get(DcMotor.class, "armJointMotor");
-	    armExtendMotor = hwMap.get(DcMotor.class, "armExtendMotor");
-	    armCombineMotor = hwMap.get(DcMotor.class, "armWheelMotor");
-	
-	
+        rightDriveRear = hwMap.get(DcMotor.class, "driveRightRearMotor");
+        climbMotor = hwMap.get(DcMotor.class, "climbMotor");
+        armJointMotor = hwMap.get(DcMotor.class, "armJointMotor");
+        armExtendMotor = hwMap.get(DcMotor.class, "armExtendMotor");
+        armCombineMotor = hwMap.get(DcMotor.class, "armWheelMotor");
+
+
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
         rightDriveRear.setDirection(DcMotor.Direction.REVERSE);
@@ -72,12 +71,12 @@ public class hardware2018
         rightDriveRear.setPower(0);
         climbMotor.setPower(0);
         armJointMotor.setPower(0);
-	armExtendMotor.setPower(0);
-	armCombineMotor.setPower(0);
-	
+        armExtendMotor.setPower(0);
+        armCombineMotor.setPower(0);
+
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
-	// We may need to get rid of the run using encoder things because it could be causing problems.
+        // We may need to get rid of the run using encoder things because it could be causing problems.
         leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -85,6 +84,6 @@ public class hardware2018
         climbMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armCombineMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-	armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
