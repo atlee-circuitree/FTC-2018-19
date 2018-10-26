@@ -33,8 +33,8 @@ public class hardware2018 {
     public DcMotor armExtendMotor = null;
     public DcMotor armJointMotor = null;
     public DcMotor armCombineMotor = null;
-    public Servo armCombineServo = null;
-    public Servo armReleaseServo = null;
+    public ServoImplEx armCombineServo = null;
+    public ServoImplEx armReleaseServo = null;
 
     /* Local OpMode members. */
     HardwareMap hwMap = null;
@@ -61,8 +61,8 @@ public class hardware2018 {
         armJointMotor = hwMap.get(DcMotor.class, "armJointMotor");
         armExtendMotor = hwMap.get(DcMotor.class, "armExtendMotor");
         armCombineMotor = hwMap.get(DcMotor.class, "armWheelMotor");
-        armCombineServo = hwMap.get(Servo.class, "armCombineServo");
-        armReleaseServo = hwMap.get(Servo.class, "armReleaseServo");
+        armCombineServo = (ServoImplEx)hwMap.get(Servo.class, "armCombineServo");
+        armReleaseServo = (ServoImplEx)hwMap.get(Servo.class, "armReleaseServo");
 
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
@@ -76,6 +76,8 @@ public class hardware2018 {
         armJointMotor.setPower(0);
         armExtendMotor.setPower(0);
         armCombineMotor.setPower(0);
+
+
 
 
         // Set all motors to run with encoders.

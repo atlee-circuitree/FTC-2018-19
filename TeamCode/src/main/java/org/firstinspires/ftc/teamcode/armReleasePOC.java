@@ -33,6 +33,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -121,15 +122,17 @@ public class armReleasePOC extends LinearOpMode {
 
             robot.armCombineMotor.setPower(combineSpeed);
 
+            //first time the button is pushed - set a timestamp for when the servo should go back into position
             if(gamepad1.a && armReleaseEndTime == 0)
             {
-                armReleaseEndTime = runtime.time(TimeUnit.MILLISECONDS) + 2000;
+                armReleaseEndTime = runtime.time(TimeUnit.MILLISECONDS) + 2000; //right now + 2 seconds.  We use milliseconds to avoid rounding problems
                 robot.armReleaseServo.setPosition(0);
             }
-            if(armReleaseEndTime < runtime.time(TimeUnit.MILLISECONDS))
+            if(armReleaseEndTime < runtime.time(TimeUnit.MILLISECONDS)) //have our 2 seconds passed?
             {
                 armReleaseEndTime = 0;
-                robot.armReleaseServo.setPosition(1);
+                robot.armReleaseServo.setPosition(1); //Move servo back to start position
+                //robot.armReleaseServo.setPwmDisable(); //disable servo
             }
 
 
