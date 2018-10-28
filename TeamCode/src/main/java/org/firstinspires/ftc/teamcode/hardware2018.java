@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
@@ -36,6 +37,8 @@ public class hardware2018 {
     public ServoImplEx armCombineServo = null;
     public ServoImplEx armReleaseServo = null;
 
+    public DistanceSensor sensorRange = null;
+
     /* Local OpMode members. */
     HardwareMap hwMap = null;
     private ElapsedTime period = new ElapsedTime();
@@ -63,6 +66,7 @@ public class hardware2018 {
         armCombineMotor = hwMap.get(DcMotor.class, "armWheelMotor");
         armCombineServo = (ServoImplEx)hwMap.get(Servo.class, "armCombineServo");
         armReleaseServo = (ServoImplEx)hwMap.get(Servo.class, "armReleaseServo");
+        sensorRange = hwMap.get(DistanceSensor.class, "distanceLeft");
 
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
