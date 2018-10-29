@@ -57,7 +57,7 @@ public class ArmMotorDrive extends LinearOpMode {
 
         robot.init(hardwareMap);
 
-        robot.armCombineServo.setPosition(0);
+        robot.armCombineServo.setPosition(0.5);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -116,6 +116,24 @@ public class ArmMotorDrive extends LinearOpMode {
                 robot.armCombineServo.setPosition(0);
             else if(gamepad1.right_trigger > 0)
                 robot.armCombineServo.setPosition(0.5);
+
+            if(gamepad1.y)
+                robot.climbMotor.setPower(1);
+            else if (gamepad1.a)
+                robot.climbMotor.setPower(-1);
+            else
+                robot.climbMotor.setPower(0);
+
+            if(gamepad1.x)
+            {
+                robot.armReleaseServo.setPwmEnable();
+                robot.armReleaseServo.setPosition(0);
+            }
+            else
+            {
+                robot.armReleaseServo.setPwmDisable();
+                //robot.armReleaseServo.setPosition(1);
+            }
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.

@@ -61,7 +61,7 @@ public class armReleasePOC extends LinearOpMode {
     // Declare OpMode members.
     hardware2018 robot = new hardware2018();
     private ElapsedTime runtime = new ElapsedTime();
-    long armReleaseEndTime = 0;
+    double armReleaseEndTime = 0;
 
     @Override
     public void runOpMode() {
@@ -125,14 +125,15 @@ public class armReleasePOC extends LinearOpMode {
             //first time the button is pushed - set a timestamp for when the servo should go back into position
             if(gamepad1.a && armReleaseEndTime == 0)
             {
-                armReleaseEndTime = runtime.time(TimeUnit.MILLISECONDS) + 2000; //right now + 2 seconds.  We use milliseconds to avoid rounding problems
+                armReleaseEndTime = runtime.milliseconds() + 2000; //right now + 2 seconds.  We use milliseconds to avoid rounding problems
                 robot.armReleaseServo.setPosition(0);
+                robot.armReleaseServo.setPwmEnable();
             }
-            if(armReleaseEndTime < runtime.time(TimeUnit.MILLISECONDS)) //have our 2 seconds passed?
+            if(armReleaseEndTime < runtime.milliseconds()) //have our 2 seconds passed?
             {
                 armReleaseEndTime = 0;
-                robot.armReleaseServo.setPosition(1); //Move servo back to start position
-                //robot.armReleaseServo.setPwmDisable(); //disable servo
+                robot.armReleaseServo.setPwmDisable();
+
             }
 
 
