@@ -83,6 +83,7 @@ public class hardware2018 {
 
         armJointMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armExtendMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        climbMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
 

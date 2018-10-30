@@ -90,47 +90,45 @@ public class ArmMotorDrive extends LinearOpMode {
             //get data for combine speed
             if (!gamepad1.left_bumper && !gamepad1.right_bumper) {
                 combineSpeed = 0;
-            } else if (gamepad1.right_bumper) {
-                combineSpeed = .9;
             } else if (gamepad1.left_bumper) {
-                combineSpeed = -.9;
+                combineSpeed = 1;
+            } else if (gamepad1.right_bumper) {
+                combineSpeed = -1;
             }
 
+
             //move arm in and out
-            if(gamepad1.dpad_down)
-                robot.armExtendMotor.setPower(1);
-            else if(gamepad1.dpad_up)
+            if (gamepad2.left_stick_y > 0.5)
                 robot.armExtendMotor.setPower(-1);
+            else if (gamepad2.left_stick_y < -0.5)
+                robot.armExtendMotor.setPower(1);
             else
                 robot.armExtendMotor.setPower(0);
 
             //move arm up and down
-            if(gamepad1.dpad_left)
+            if (gamepad2.right_stick_y > 0.5)
                 robot.armJointMotor.setPower(1);
-            else if(gamepad1.dpad_right)
+            else if (gamepad2.right_stick_y < -0.5)
                 robot.armJointMotor.setPower(-1);
             else
                 robot.armJointMotor.setPower(0);
 
-            if(gamepad1.left_trigger > 0)
+            if (gamepad2.left_trigger > 0)
                 robot.armCombineServo.setPosition(0);
-            else if(gamepad1.right_trigger > 0)
+            else if (gamepad2.right_trigger > 0)
                 robot.armCombineServo.setPosition(0.5);
 
-            if(gamepad1.y)
+            if (gamepad1.y)
                 robot.climbMotor.setPower(1);
             else if (gamepad1.a)
                 robot.climbMotor.setPower(-1);
             else
                 robot.climbMotor.setPower(0);
 
-            if(gamepad1.x)
-            {
+            if (gamepad1.x) {
                 robot.armReleaseServo.setPwmEnable();
                 robot.armReleaseServo.setPosition(0);
-            }
-            else
-            {
+            } else {
                 robot.armReleaseServo.setPwmDisable();
                 //robot.armReleaseServo.setPosition(1);
             }
