@@ -105,6 +105,8 @@ public class TeleOp2018Drive extends LinearOpMode {
                 combineSpeed = 1;
             } else if (gamepad1.right_bumper) {
                 combineSpeed = -1;
+            } else if (gamepad1.right_trigger > .85){
+                combineSpeed = 0;
             }
 
 
