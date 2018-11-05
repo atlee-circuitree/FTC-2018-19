@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name = "basic - AutoStart", group = "Linear Opmode")
 
-public class basicAuto extends LinearOpMode {
+public class basicAutoTest extends LinearOpMode {
 
 
     // Declare OpMode members.
@@ -62,15 +62,16 @@ public class basicAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        telemetry.addData("Status", "Initialized");
+        telemetry.addData("DO NOT RUN AT COMP", "Initialized");
         telemetry.update();
 
         robot.init(hardwareMap);
 
 
-        // Wait for the game to start (driver presses PLAY)
+        /* Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
+	*/
 
         //drop the bot
         // sleep times are to run motors without jumping to the next ones or using giant while loops

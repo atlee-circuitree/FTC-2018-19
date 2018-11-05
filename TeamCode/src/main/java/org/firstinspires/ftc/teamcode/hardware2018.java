@@ -34,6 +34,7 @@ public class hardware2018 {
     public DcMotor armExtendMotor = null;
     public DcMotor armJointMotor = null;
     public DcMotor armCombineMotor = null;
+
     public ServoImplEx armCombineServo = null;
     public ServoImplEx armReleaseServo = null;
 
