@@ -114,9 +114,9 @@ public class TeleOp2018Drive extends LinearOpMode {
 
             //move arm in and out
             if (gamepad2.left_stick_y > 0.5)  //stick values are -1 to 1 - so we have to set a "threshold" that triggers movement
-                robot.armExtendMotor.setPower(1);
-            else if (gamepad2.left_stick_y < -0.5)
                 robot.armExtendMotor.setPower(-1);
+            else if (gamepad2.left_stick_y < -0.5)
+                robot.armExtendMotor.setPower(1);
             else
                 robot.armExtendMotor.setPower(0);
 
