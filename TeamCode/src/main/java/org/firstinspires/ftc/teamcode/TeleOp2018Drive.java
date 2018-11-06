@@ -1,3 +1,5 @@
+
+
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -101,28 +103,28 @@ public class TeleOp2018Drive extends LinearOpMode {
 
             //get data for combine speed
             //starts off, stays on in whatever the last direction was
-            if (gamepad1.left_bumper) {
+            if (gamepad2.left_bumper) {
                 combineSpeed = 1;
-            } else if (gamepad1.right_bumper) {
+            } else if (gamepad2.right_bumper) {
                 combineSpeed = -1;
-            } else if (gamepad1.right_trigger > .85){
+            } else if (gamepad2.right_trigger > .85){
                 combineSpeed = 0;
             }
 
 
             //move arm in and out
             if (gamepad2.left_stick_y > 0.5)  //stick values are -1 to 1 - so we have to set a "threshold" that triggers movement
-                robot.armExtendMotor.setPower(-1);
-            else if (gamepad2.left_stick_y < -0.5)
                 robot.armExtendMotor.setPower(1);
+            else if (gamepad2.left_stick_y < -0.5)
+                robot.armExtendMotor.setPower(-1);
             else
                 robot.armExtendMotor.setPower(0);
 
             //move arm up and down
             if (gamepad2.right_stick_y > 0.5)  //stick values are -1 to 1 - so we have to set a "threshold" that triggers movement
-                robot.armJointMotor.setPower(1);
-            else if (gamepad2.right_stick_y < -0.5)
                 robot.armJointMotor.setPower(-1);
+            else if (gamepad2.right_stick_y < -0.5)
+                robot.armJointMotor.setPower(1);
             else
                 robot.armJointMotor.setPower(0);
 
@@ -167,6 +169,14 @@ public class TeleOp2018Drive extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
+            //show power of wheles
+            telemetry.addData("E-ExtendMotor", robot.armExtendMotor.getCurrentPosition());
+            telemetry.addData("E-armJointMotor", robot.armJointMotor.getCurrentPosition());
+            telemetry.addData("E-armCombineMotor", robot.armCombineMotor.getCurrentPosition());
+            telemetry.addData("E-leftdrivemotor", robot.leftDriveFront.getCurrentPosition());
+            telemetry.addData("E-rightDrivemotor", robot.rightDriveFront.getCurrentPosition());
+            telemetry.addData("E-climbMotor", robot.climbMotor.getCurrentPosition());
+
         }
     }
 }
