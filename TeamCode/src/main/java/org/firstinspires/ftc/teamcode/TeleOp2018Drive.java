@@ -174,7 +174,10 @@ public class TeleOp2018Drive extends LinearOpMode {
             telemetry.addData("E-armJointMotor", robot.armJointMotor.getCurrentPosition());
             telemetry.addData("E-armCombineMotor", robot.armCombineMotor.getCurrentPosition());
             telemetry.addData("E-leftdrivemotor", robot.leftDriveFront.getCurrentPosition());
+            telemetry.addData("E-leftDrivemotorRear", robot.leftDriveRear.getCurrentPosition());
             telemetry.addData("E-rightDrivemotor", robot.rightDriveFront.getCurrentPosition());
+            telemetry.addData("E-rightDriveMotorRear", robot.rightDriveRear.getCurrentPosition());
+
             telemetry.addData("E-climbMotor", robot.climbMotor.getCurrentPosition());
 
         }
