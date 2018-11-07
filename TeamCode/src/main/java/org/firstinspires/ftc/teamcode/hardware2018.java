@@ -71,6 +71,8 @@ public class hardware2018 {
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
         rightDriveRear.setDirection(DcMotor.Direction.REVERSE);
+
+        climbMotor.setDirection(DcMotor.Direction.REVERSE);
         // Set all motors to zero power
         leftDriveFront.setPower(0);
         leftDriveRear.setPower(0);
