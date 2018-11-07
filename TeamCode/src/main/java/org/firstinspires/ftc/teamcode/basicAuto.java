@@ -74,11 +74,13 @@ public class basicAuto extends LinearOpMode {
 
         //drop the bot
         // sleep times are to run motors without jumping to the next ones or using giant while loops
-        robot.climbMotor.setPower(-1);
+
 
 
         //unfurl the robot arm
+        robot.armReleaseServo.setPwmEnable();
         robot.armReleaseServo.setPosition(0);
+        robot.climbMotor.setPower(-1);
         sleep(500);
 
         robot.armJointMotor.setPower(1);
