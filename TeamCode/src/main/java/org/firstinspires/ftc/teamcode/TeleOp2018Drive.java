@@ -136,7 +136,7 @@ public class TeleOp2018Drive extends LinearOpMode {
 
             //open and close the combine's servo to hold/release game pieces - option 2 - open triggered by a button, close after a specific timeframe
             //first time the button is pushed - set a timestamp for when the servo should go back into position
-            if (gamepad1.a && armCombineOpenEndTime == 0) {
+            if (gamepad2.a && armCombineOpenEndTime == 0) {
                 armCombineOpenEndTime = runtime.milliseconds() + 2000; //right now + 2 seconds.  We use milliseconds instead of seconds to avoid rounding problems
                 robot.armCombineServo.setPosition(0);
             }
