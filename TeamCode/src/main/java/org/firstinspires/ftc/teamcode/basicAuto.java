@@ -80,21 +80,21 @@ public class basicAuto extends LinearOpMode {
         //unfurl the robot arm
         robot.armReleaseServo.setPwmEnable();
         robot.armReleaseServo.setPosition(-1);
-        robot.climbMotor.setPower(-1);
+        robot.climbMotor.setPower(1);
         sleep(500);
         robot.armReleaseServo.setPosition(0);
         robot.climbMotor.setPower(0);
         sleep(2000);
-        robot.armJointMotor.setPower(-1);
+        robot.armJointMotor.setPower(1);
         robot.armJointMotor.setPower(1);
         sleep(2500);
         robot.armJointMotor.setPower(0);
 
         robot.armExtendMotor.setPower(1);
-        sleep(3500);
+        sleep(2500);
         robot.armExtendMotor.setPower(0);
 
-
+        sleep(2000);
         //needs to have 6500 ms before it
         robot.climbMotor.setPower(0);
 
