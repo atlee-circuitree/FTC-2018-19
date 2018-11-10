@@ -91,6 +91,15 @@ public class hardware2018 {
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
         // We may need to get rid of the run using encoder things because it could be causing problems.
+        leftDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDriveRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDriveFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDriveRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        climbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armCombineMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armJointMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armExtendMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
