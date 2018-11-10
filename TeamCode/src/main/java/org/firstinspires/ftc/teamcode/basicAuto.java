@@ -101,16 +101,17 @@ public class basicAuto extends LinearOpMode {
 
         // find current rotatedness of wheels so the robot can do ~2.23 revs
         // note: our drive motors have 7 ticks per rotation
-        int originPos = robot.leftDriveFront.getCurrentPosition()/7;
+        int originPos = robot.rightDriveFront.getCurrentPosition();
         int revolveNum = originPos + 3900;
 
-        while (robot.leftDriveFront.getCurrentPosition() < revolveNum)
+        while (robot.rightDriveFront.getCurrentPosition() < revolveNum)
         {
             robot.leftDriveFront.setPower(1);
             robot.leftDriveRear.setPower(1);
             robot.rightDriveFront.setPower(1);
             robot.rightDriveRear.setPower(1);
         }
+        
             robot.leftDriveFront.setPower(0);
             robot.leftDriveRear.setPower(0);
             robot.rightDriveFront.setPower(0);
