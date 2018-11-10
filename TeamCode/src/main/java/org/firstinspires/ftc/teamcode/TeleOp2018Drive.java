@@ -138,7 +138,7 @@ public class TeleOp2018Drive extends LinearOpMode {
             //first time the button is pushed - set a timestamp for when the servo should go back into position
             if (gamepad1.a && armCombineOpenEndTime == 0) {
                 armCombineOpenEndTime = runtime.milliseconds() + 2000; //right now + 2 seconds.  We use milliseconds instead of seconds to avoid rounding problems
-                robot.armCombineServo.setPosition(0);
+                robot.armCombineServo.setPosition(0.7);
             }
             if (armCombineOpenEndTime < runtime.milliseconds()) //have our 2 seconds passed?
             {
@@ -174,7 +174,10 @@ public class TeleOp2018Drive extends LinearOpMode {
             telemetry.addData("E-armJointMotor", robot.armJointMotor.getCurrentPosition());
             telemetry.addData("E-armCombineMotor", robot.armCombineMotor.getCurrentPosition());
             telemetry.addData("E-leftdrivemotor", robot.leftDriveFront.getCurrentPosition());
+            telemetry.addData("E-leftDrivemotorRear", robot.leftDriveRear.getCurrentPosition());
             telemetry.addData("E-rightDrivemotor", robot.rightDriveFront.getCurrentPosition());
+            telemetry.addData("E-rightDriveMotorRear", robot.rightDriveRear.getCurrentPosition());
+
             telemetry.addData("E-climbMotor", robot.climbMotor.getCurrentPosition());
 
         }
