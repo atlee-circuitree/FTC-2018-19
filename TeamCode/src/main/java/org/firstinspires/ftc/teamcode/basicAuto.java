@@ -83,7 +83,7 @@ public class basicAuto extends LinearOpMode {
         robot.climbMotor.setPower(-1);
         sleep(500);
         robot.armReleaseServo.setPosition(0);
-        robot.armJointMotor.setPower(-1);
+        robot.armJointMotor.setPower(1);
         sleep(2500);
         robot.armJointMotor.setPower(0);
 
