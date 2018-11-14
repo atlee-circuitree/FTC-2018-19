@@ -67,6 +67,8 @@ public class TeleOp2018Drive extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+	//create a timerVarible
+	
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
@@ -138,12 +140,12 @@ public class TeleOp2018Drive extends LinearOpMode {
             //first time the button is pushed - set a timestamp for when the servo should go back into position
             if (gamepad2.a && armCombineOpenEndTime == 0) {
                 armCombineOpenEndTime = runtime.milliseconds() + 2000; //right now + 2 seconds.  We use milliseconds instead of seconds to avoid rounding problems
-                robot.armCombineServo.setPosition(0.7);
+                robot.armCombineServo.setPosition(1);
             }
             if (armCombineOpenEndTime < runtime.milliseconds()) //have our 2 seconds passed?
             {
                 armCombineOpenEndTime = 0;
-                robot.armCombineServo.setPosition(0.5);
+                robot.armCombineServo.setPosition(0.7);
             }
 
             //drive the climbing/drop motor
@@ -158,10 +160,11 @@ public class TeleOp2018Drive extends LinearOpMode {
             //or to manually go through the motions of start-up without autonomous code
             if (gamepad1.x) {
                 robot.armReleaseServo.setPwmEnable();
-                robot.armReleaseServo.setPosition(0);
+                robot.armReleaseServo.setPosition(-.7);
             } else {
-                robot.armReleaseServo.setPwmDisable();
                 //robot.armReleaseServo.setPosition(1);
+                robot.armReleaseServo.setPwmDisable();
+
             }
 
 
