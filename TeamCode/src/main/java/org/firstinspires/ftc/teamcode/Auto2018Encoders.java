@@ -51,6 +51,7 @@ public class Auto2018Encoders extends LinearOpMode {
 
     // Declare OpMode members.
     hardware2018 robot = new hardware2018();
+    MineralDetector mineralDetector = new MineralDetector();
     private ElapsedTime runtime = new ElapsedTime();
 
 
@@ -60,12 +61,14 @@ public class Auto2018Encoders extends LinearOpMode {
         telemetry.update();
 
         robot.init(hardwareMap);
+        mineralDetector.init(hardwareMap, telemetry);
 
         robot.armCombineServo.setPosition(0.5);
 
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        MineralDetector.MineralPosition goldPosition = mineralDetector.GetMineralPosition(); //read mineral position before we drop
         runtime.reset();
 
         // Setup a variable for each drive wheel to save power level for telemetry
@@ -74,9 +77,11 @@ public class Auto2018Encoders extends LinearOpMode {
         double combineSpeed = 0;
         double armCombineOpenEndTime = 0;
 
+        
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
 
             if(runtime.milliseconds() < 1000)
                 robot.armReleaseServo.setPosition(0);
@@ -99,20 +104,19 @@ public class Auto2018Encoders extends LinearOpMode {
                 robot.armExtendMotor.setPower(0);
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
-            //show power of wheles
-            telemetry.addData("E-ExtendMotor", robot.armExtendMotor.getCurrentPosition());
-            telemetry.addData("E-armJointMotor", robot.armJointMotor.getCurrentPosition());
-            telemetry.addData("E-armCombineMotor", robot.armCombineMotor.getCurrentPosition());
-            telemetry.addData("E-leftdrivemotor", robot.leftDriveFront.getCurrentPosition());
-            telemetry.addData("E-leftDrivemotorRear", robot.leftDriveRear.getCurrentPosition());
-            telemetry.addData("E-rightDrivemotor", robot.rightDriveFront.getCurrentPosition());
-            telemetry.addData("E-rightDriveMotorRear", robot.rightDriveRear.getCurrentPosition());
 
-            telemetry.addData("E-climbMotor", robot.climbMotor.getCurrentPosition());
+//            telemetry.addData("E-ExtendMotor", robot.armExtendMotor.getCurrentPosition());
+//            telemetry.addData("E-armJointMotor", robot.armJointMotor.getCurrentPosition());
+//            telemetry.addData("E-armCombineMotor", robot.armCombineMotor.getCurrentPosition());
+//            telemetry.addData("E-leftdrivemotor", robot.leftDriveFront.getCurrentPosition());
+//            telemetry.addData("E-leftDrivemotorRear", robot.leftDriveRear.getCurrentPosition());
+//            telemetry.addData("E-rightDrivemotor", robot.rightDriveFront.getCurrentPosition());
+//            telemetry.addData("E-rightDriveMotorRear", robot.rightDriveRear.getCurrentPosition());
+//
+//            telemetry.addData("E-climbMotor", robot.climbMotor.getCurrentPosition());
 
         }
+        mineralDetector.Shutdown();
     }
 }
