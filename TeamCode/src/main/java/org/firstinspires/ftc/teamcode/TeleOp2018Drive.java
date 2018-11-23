@@ -60,7 +60,7 @@ public class TeleOp2018Drive extends LinearOpMode {
 
         robot.init(hardwareMap);
 
-        robot.armCombineServo.setPosition(0.5);
+        robot.armCombineServo.setPosition(0.6);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -148,7 +148,7 @@ public class TeleOp2018Drive extends LinearOpMode {
             if (armCombineOpenEndTime < runtime.milliseconds()) //have our 2 seconds passed?
             {
                 armCombineOpenEndTime = 0;
-                robot.armCombineServo.setPosition(0.7);
+                robot.armCombineServo.setPosition(0.6);
             }
             if(gamepad2.dpad_down || gamepad1.dpad_down)
             {
@@ -156,7 +156,7 @@ public class TeleOp2018Drive extends LinearOpMode {
             }
             else if(armCombineOpenEndTime == 0)
             {
-                robot.armCombineServo.setPosition(0.7);
+                robot.armCombineServo.setPosition(0.6);
             }
 
             //drive the climbing/drop motor
