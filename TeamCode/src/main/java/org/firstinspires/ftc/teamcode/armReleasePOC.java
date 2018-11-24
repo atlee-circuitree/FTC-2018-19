@@ -31,6 +31,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
@@ -54,7 +55,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @TeleOp(name = "Arm Release Test 2018", group = "Linear Opmode")
-
+@Disabled
 public class armReleasePOC extends LinearOpMode {
 
 
