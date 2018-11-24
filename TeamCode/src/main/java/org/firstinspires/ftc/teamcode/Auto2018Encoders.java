@@ -61,14 +61,26 @@ public class Auto2018Encoders extends LinearOpMode {
         telemetry.update();
 
         robot.init(hardwareMap);
+        robot.ResetEncoders();
+
         mineralDetector.init(hardwareMap, telemetry);
 
         robot.armCombineServo.setPosition(0.5);
 
-
+        MineralDetector.MineralPosition goldPosition = MineralDetector.MineralPosition.Unknown;
+        MineralDetector.MineralPosition tempPosition = MineralDetector.MineralPosition.Unknown;
         // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-        MineralDetector.MineralPosition goldPosition = mineralDetector.GetMineralPosition(); //read mineral position before we drop
+        while(!isStarted())
+        {
+            tempPosition = mineralDetector.GetMineralPosition(); //read mineral position before we drop
+            if(tempPosition != MineralDetector.MineralPosition.Unknown)
+            {
+                goldPosition = tempPosition;
+            }
+        }
+        //waitForStart();
+
+        telemetry.update();
         runtime.reset();
 
         // Setup a variable for each drive wheel to save power level for telemetry
@@ -77,46 +89,180 @@ public class Auto2018Encoders extends LinearOpMode {
         double combineSpeed = 0;
         double armCombineOpenEndTime = 0;
 
-        
+        boolean dropStageCompleted = false;
+        int dropPosition = 21000;
+        int jointRaisePosition = 1800;  //1400 - better height for collecting
+        int extendOutPosition = 5000;
 
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-
-            if(runtime.milliseconds() < 1000)
-                robot.armReleaseServo.setPosition(0);
-            else
-                robot.armReleaseServo.setPwmDisable();
-
-            if(robot.climbMotor.getCurrentPosition() < 26000)
-                robot.climbMotor.setPower(1);
-            else
-                robot.climbMotor.setPower(0);
-
-            if(robot.climbMotor.getCurrentPosition() > 5000 && robot.armJointMotor.getCurrentPosition() < 1450)
-                robot.armJointMotor.setPower(1);
-            else
-                robot.armJointMotor.setPower(0);
-
-            if(robot.climbMotor.getCurrentPosition() > 5000 && robot.armExtendMotor.getCurrentPosition() < 10500)
-                robot.armExtendMotor.setPower(1);
-            else
-                robot.armExtendMotor.setPower(0);
-
-            // Show the elapsed game time and wheel power.
-            telemetry.update();
-
-//            telemetry.addData("E-ExtendMotor", robot.armExtendMotor.getCurrentPosition());
-//            telemetry.addData("E-armJointMotor", robot.armJointMotor.getCurrentPosition());
-//            telemetry.addData("E-armCombineMotor", robot.armCombineMotor.getCurrentPosition());
-//            telemetry.addData("E-leftdrivemotor", robot.leftDriveFront.getCurrentPosition());
-//            telemetry.addData("E-leftDrivemotorRear", robot.leftDriveRear.getCurrentPosition());
-//            telemetry.addData("E-rightDrivemotor", robot.rightDriveFront.getCurrentPosition());
-//            telemetry.addData("E-rightDriveMotorRear", robot.rightDriveRear.getCurrentPosition());
-//
-//            telemetry.addData("E-climbMotor", robot.climbMotor.getCurrentPosition());
-
+        //run climb motor until we've dropped
+        while (opModeIsActive() && robot.climbMotor.getCurrentPosition() < dropPosition) {
+            robot.climbMotor.setPower(1);
         }
+        robot.StopAll();
+
+//        int leftForwardPosition1 = 210;
+//        int rightForwardPosition1 = 210;
+//
+//
+//        while (opModeIsActive() && robot.leftDriveRear.getCurrentPosition() < leftForwardPosition1 && robot.rightDriveFront.getCurrentPosition() < rightForwardPosition1) {
+//            if (robot.leftDriveRear.getCurrentPosition() < leftForwardPosition1) {
+//                robot.leftDriveRear.setPower(1);
+//                robot.leftDriveFront.setPower(1);
+//            } else {
+//                robot.leftDriveRear.setPower(0);
+//                robot.leftDriveFront.setPower(0);
+//            }
+//
+//            if (robot.rightDriveFront.getCurrentPosition() < rightForwardPosition1) {
+//                robot.rightDriveRear.setPower(1);
+//                robot.rightDriveFront.setPower(1);
+//            } else {
+//                robot.rightDriveRear.setPower(0);
+//                robot.rightDriveFront.setPower(0);
+//            }
+//        }
+
+        //Timing based forward movement
+        runtime.reset();
+        while(opModeIsActive() && runtime.milliseconds() < 200)
+        {
+            robot.rightDriveRear.setPower(1);
+            robot.rightDriveFront.setPower(1);
+            robot.leftDriveRear.setPower(1);
+            robot.leftDriveFront.setPower(1);
+        }
+
+        robot.StopAll();
+
+        runtime.reset();
+
+        if (goldPosition == MineralDetector.MineralPosition.Center) {
+            while (opModeIsActive() && !dropStageCompleted) {
+                telemetry.addData("Status", "Run Time: " + runtime.toString());
+                telemetry.addData("Gold Position", goldPosition);
+
+                if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
+                        && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
+                        && robot.climbMotor.getCurrentPosition() >= dropPosition) {
+                    dropStageCompleted = true;
+                }
+
+                if (runtime.milliseconds() < 1000)
+                    robot.armReleaseServo.setPosition(0);
+                else
+                    robot.armReleaseServo.setPwmDisable();
+
+                if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
+                    robot.armJointMotor.setPower(1);
+                else
+                    robot.armJointMotor.setPower(0);
+
+                if (robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
+                    robot.armExtendMotor.setPower(1);
+                else
+                    robot.armExtendMotor.setPower(0);
+
+                // Show the elapsed game time and wheel power.
+                telemetry.update();
+            }
+        } else {
+            while (opModeIsActive() && !dropStageCompleted) {
+                telemetry.addData("Status", "Run Time: " + runtime.toString());
+                telemetry.addData("Gold Position", goldPosition);
+
+                if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
+                        && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
+                        && robot.climbMotor.getCurrentPosition() >= dropPosition) {
+                    dropStageCompleted = true;
+                }
+
+                if (runtime.milliseconds() < 1000)
+                    robot.armReleaseServo.setPosition(0);
+                else
+                    robot.armReleaseServo.setPwmDisable();
+
+                if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
+                    robot.armJointMotor.setPower(1);
+                else
+                    robot.armJointMotor.setPower(0);
+
+                if (runtime.milliseconds() > 2000 && robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
+                    robot.armExtendMotor.setPower(1);
+                else
+                    robot.armExtendMotor.setPower(0);
+
+                // Show the elapsed game time and wheel power.
+                telemetry.update();
+            }
+        }
+
+        telemetry.addData("Gold Position", goldPosition);
+        telemetry.update();
+
+        robot.StopAll();
+
+        runtime.reset();
+        while(opModeIsActive() && runtime.milliseconds() < 200)
+        {
+            robot.rightDriveRear.setPower(1);
+            robot.rightDriveFront.setPower(1);
+            robot.leftDriveRear.setPower(1);
+            robot.leftDriveFront.setPower(1);
+        }
+        robot.StopAll();
+
+
+        if(goldPosition == MineralDetector.MineralPosition.Left)
+        {
+            runtime.reset();
+            while(opModeIsActive() && runtime.milliseconds() < 450)
+            {
+                robot.leftDriveRear.setPower(-1);
+                robot.leftDriveFront.setPower(-1);
+                robot.rightDriveRear.setPower(1);
+                robot.rightDriveFront.setPower(1);
+            }
+            runtime.reset();
+            while(opModeIsActive() && runtime.milliseconds() < 800)
+            {
+                robot.leftDriveRear.setPower(1);
+                robot.leftDriveFront.setPower(1);
+                robot.rightDriveRear.setPower(1);
+                robot.rightDriveFront.setPower(1);
+            }
+        }
+        else if(goldPosition == MineralDetector.MineralPosition.Right)
+        {
+            runtime.reset();
+            while(opModeIsActive() && runtime.milliseconds() < 450)
+            {
+                robot.leftDriveRear.setPower(1);
+                robot.leftDriveFront.setPower(1);
+                robot.rightDriveRear.setPower(-1);
+                robot.rightDriveFront.setPower(-1);
+            }
+            runtime.reset();
+            while(opModeIsActive() && runtime.milliseconds() < 800)
+            {
+                robot.leftDriveRear.setPower(1);
+                robot.leftDriveFront.setPower(1);
+                robot.rightDriveRear.setPower(1);
+                robot.rightDriveFront.setPower(1);
+            }
+        }
+        else if(goldPosition == MineralDetector.MineralPosition.Center) //gold center
+        {
+            runtime.reset();
+            while(opModeIsActive() && runtime.milliseconds() < 800)
+            {
+                robot.rightDriveRear.setPower(1);
+                robot.rightDriveFront.setPower(1);
+                robot.leftDriveRear.setPower(1);
+                robot.leftDriveFront.setPower(1);
+            }
+        }
+
+        robot.StopAll();
         mineralDetector.Shutdown();
     }
 }

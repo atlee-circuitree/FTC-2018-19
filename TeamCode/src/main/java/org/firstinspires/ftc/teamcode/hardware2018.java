@@ -88,8 +88,37 @@ public class hardware2018 {
         armExtendMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         climbMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        leftDriveFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftDriveRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDriveFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDriveRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        //set motors in starting state
+        leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        climbMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armCombineMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
 
+    public void StopAll()
+    {
+        // Set all motors to zero power
+        leftDriveFront.setPower(0);
+        leftDriveRear.setPower(0);
+        rightDriveFront.setPower(0);
+        rightDriveRear.setPower(0);
+        climbMotor.setPower(0);
+        armJointMotor.setPower(0);
+        armExtendMotor.setPower(0);
+        armCombineMotor.setPower(0);
+    }
+
+    public void ResetEncoders()
+    {
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
         // We may need to get rid of the run using encoder things because it could be causing problems.

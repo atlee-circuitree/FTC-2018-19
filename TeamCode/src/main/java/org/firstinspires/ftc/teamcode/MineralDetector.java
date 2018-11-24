@@ -40,6 +40,10 @@ public class MineralDetector {
         } else {
             telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
+
+        if (tfod != null) {
+            tfod.activate();
+        }
     }
 
     public MineralPosition GetMineralPosition() {
@@ -76,12 +80,10 @@ public class MineralDetector {
                     }
                     telemetry.addData("Samples detected", detectedSampling);
                     if (detectedSampling == 2) {
-                        if (whiteSamples == 2)
-                        {
+                        if (whiteSamples == 2) {
                             telemetry.addData("GoldPosition", "Left");
                             position = MineralPosition.Left;
-                        }
-                        else if (whiteSamples == 1) {
+                        } else if (whiteSamples == 1) {
                             if (whiteLeftMost < goldLeftMost) {
                                 telemetry.addData("GoldPosition", "Right");
                                 position = MineralPosition.Right;
@@ -89,9 +91,7 @@ public class MineralDetector {
                                 telemetry.addData("GoldPosition", "Middle");
                                 position = MineralPosition.Center;
                             }
-                        }
-                        else
-                        {
+                        } else {
                             telemetry.addData("GoldPosition", "Unknown");
                             position = MineralPosition.Unknown;
                         }
@@ -103,7 +103,7 @@ public class MineralDetector {
 
             }
         }
-
+        telemetry.update();
         return position;
     }
 
@@ -133,8 +133,7 @@ public class MineralDetector {
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
     }
 
-    public void Shutdown()
-    {
+    public void Shutdown() {
         if (tfod != null) {
             tfod.shutdown();
         }

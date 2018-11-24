@@ -60,6 +60,9 @@ public class TeleOp2018Drive extends LinearOpMode {
 
         robot.init(hardwareMap);
 
+        if(gamepad1.dpad_up)
+            robot.ResetEncoders();
+
         robot.armCombineServo.setPosition(0.6);
 
 
@@ -194,5 +197,6 @@ public class TeleOp2018Drive extends LinearOpMode {
             telemetry.addData("E-climbMotor", robot.climbMotor.getCurrentPosition());
 
         }
+        robot.StopAll();
     }
 }
