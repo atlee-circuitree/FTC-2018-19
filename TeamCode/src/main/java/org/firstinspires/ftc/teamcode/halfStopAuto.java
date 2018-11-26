@@ -87,7 +87,6 @@ public class halfStopAuto extends LinearOpMode {
         //robot.climbMotor.setPower(0);
         sleep(2000);
         robot.armJointMotor.setPower(1);
-        robot.armJointMotor.setPower(1);
         sleep(2000);
         robot.armJointMotor.setPower(0);
         sleep(500);
@@ -95,7 +94,7 @@ public class halfStopAuto extends LinearOpMode {
         sleep(2000);
         robot.armExtendMotor.setPower(0);
 
-        sleep(2500);
+        sleep(1500);
         //needs to have ~8500 ms before it
         robot.climbMotor.setPower(0);
 
@@ -103,7 +102,7 @@ public class halfStopAuto extends LinearOpMode {
         // find current rotatedness of wheels so the robot can do ~2.23 revs
         // note: our drive motors have 7 ticks per rotation
         int originPos = robot.rightDriveFront.getCurrentPosition();
-        int revolveNum = originPos + 1300;
+        int revolveNum = originPos + 900;
 
         while (robot.rightDriveFront.getCurrentPosition() < revolveNum)
         {

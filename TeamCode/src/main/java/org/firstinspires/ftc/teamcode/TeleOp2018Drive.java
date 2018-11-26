@@ -38,6 +38,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.android.AndroidOrientation;
+
 
 /**
  * Drives arm motors with a controller for testing and positioning the robot for measuring
@@ -185,8 +187,8 @@ public class TeleOp2018Drive extends LinearOpMode {
             telemetry.addData("E-leftDrivemotorRear", robot.leftDriveRear.getCurrentPosition());
             telemetry.addData("E-rightDrivemotor", robot.rightDriveFront.getCurrentPosition());
             telemetry.addData("E-rightDriveMotorRear", robot.rightDriveRear.getCurrentPosition());
-
             telemetry.addData("E-climbMotor", robot.climbMotor.getCurrentPosition());
+            //telemetry.addData("Android roll", AndroidOrientation.getRoll());
 
         }
     }
