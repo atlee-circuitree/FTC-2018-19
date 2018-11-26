@@ -33,20 +33,18 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 
 /**
  * Drives arm motors with a controller for testing and positioning the robot for measuring
  */
 
-@Autonomous(name = "Autonomous2018Encoders", group = "Linear Opmode")
+@Autonomous(name = "Autonomous2018Encoders_Simpler", group = "Linear Opmode")
 
-public class Auto2018Encoders extends LinearOpMode {
+public class Auto2018Encoders_Simpler extends LinearOpMode {
 
 
     // Declare OpMode members.
@@ -100,28 +98,6 @@ public class Auto2018Encoders extends LinearOpMode {
         }
         robot.StopAll();
 
-//        int leftForwardPosition1 = 210;
-//        int rightForwardPosition1 = 210;
-//
-//
-//        while (opModeIsActive() && robot.leftDriveRear.getCurrentPosition() < leftForwardPosition1 && robot.rightDriveFront.getCurrentPosition() < rightForwardPosition1) {
-//            if (robot.leftDriveRear.getCurrentPosition() < leftForwardPosition1) {
-//                robot.leftDriveRear.setPower(1);
-//                robot.leftDriveFront.setPower(1);
-//            } else {
-//                robot.leftDriveRear.setPower(0);
-//                robot.leftDriveFront.setPower(0);
-//            }
-//
-//            if (robot.rightDriveFront.getCurrentPosition() < rightForwardPosition1) {
-//                robot.rightDriveRear.setPower(1);
-//                robot.rightDriveFront.setPower(1);
-//            } else {
-//                robot.rightDriveRear.setPower(0);
-//                robot.rightDriveFront.setPower(0);
-//            }
-//        }
-
         //Timing based forward movement
         runtime.reset();
         while(opModeIsActive() && runtime.milliseconds() < 200)
@@ -153,14 +129,14 @@ public class Auto2018Encoders extends LinearOpMode {
                     robot.armReleaseServo.setPwmDisable();
 
                 if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
-                    robot.armJointMotor.setPower(1);
+                    robot.ArmJointRaise();
                 else
-                    robot.armJointMotor.setPower(0);
+                    robot.ArmJointStop();
 
                 if (robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
-                    robot.armExtendMotor.setPower(1);
+                    robot.ArmExtendOut();
                 else
-                    robot.armExtendMotor.setPower(0);
+                    robot.ArmExtendStop();
 
                 // Show the elapsed game time and wheel power.
                 telemetry.update();
@@ -182,14 +158,14 @@ public class Auto2018Encoders extends LinearOpMode {
                     robot.armReleaseServo.setPwmDisable();
 
                 if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
-                    robot.armJointMotor.setPower(1);
+                    robot.ArmJointRaise();
                 else
-                    robot.armJointMotor.setPower(0);
+                    robot.ArmJointStop();
 
                 if (runtime.milliseconds() > 2000 && robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
-                    robot.armExtendMotor.setPower(1);
+                    robot.ArmExtendOut();
                 else
-                    robot.armExtendMotor.setPower(0);
+                    robot.ArmExtendStop();
 
                 // Show the elapsed game time and wheel power.
                 telemetry.update();
@@ -204,10 +180,7 @@ public class Auto2018Encoders extends LinearOpMode {
         runtime.reset();
         while(opModeIsActive() && runtime.milliseconds() < 200)
         {
-            robot.rightDriveRear.setPower(1);
-            robot.rightDriveFront.setPower(1);
-            robot.leftDriveRear.setPower(1);
-            robot.leftDriveFront.setPower(1);
+            robot.Forward();
         }
         robot.StopAll();
 
@@ -217,18 +190,12 @@ public class Auto2018Encoders extends LinearOpMode {
             runtime.reset();
             while(opModeIsActive() && runtime.milliseconds() < 450)
             {
-                robot.leftDriveRear.setPower(-1);
-                robot.leftDriveFront.setPower(-1);
-                robot.rightDriveRear.setPower(1);
-                robot.rightDriveFront.setPower(1);
+                robot.Left();
             }
             runtime.reset();
             while(opModeIsActive() && runtime.milliseconds() < 800)
             {
-                robot.leftDriveRear.setPower(1);
-                robot.leftDriveFront.setPower(1);
-                robot.rightDriveRear.setPower(1);
-                robot.rightDriveFront.setPower(1);
+                robot.Forward();
             }
         }
         else if(goldPosition == MineralDetector.MineralPosition.Right)
@@ -236,18 +203,12 @@ public class Auto2018Encoders extends LinearOpMode {
             runtime.reset();
             while(opModeIsActive() && runtime.milliseconds() < 450)
             {
-                robot.leftDriveRear.setPower(1);
-                robot.leftDriveFront.setPower(1);
-                robot.rightDriveRear.setPower(-1);
-                robot.rightDriveFront.setPower(-1);
+                robot.Right();
             }
             runtime.reset();
             while(opModeIsActive() && runtime.milliseconds() < 800)
             {
-                robot.leftDriveRear.setPower(1);
-                robot.leftDriveFront.setPower(1);
-                robot.rightDriveRear.setPower(1);
-                robot.rightDriveFront.setPower(1);
+                robot.Forward();
             }
         }
         else if(goldPosition == MineralDetector.MineralPosition.Center) //gold center
@@ -255,10 +216,7 @@ public class Auto2018Encoders extends LinearOpMode {
             runtime.reset();
             while(opModeIsActive() && runtime.milliseconds() < 800)
             {
-                robot.rightDriveRear.setPower(1);
-                robot.rightDriveFront.setPower(1);
-                robot.leftDriveRear.setPower(1);
-                robot.leftDriveFront.setPower(1);
+                robot.Forward();
             }
         }
 

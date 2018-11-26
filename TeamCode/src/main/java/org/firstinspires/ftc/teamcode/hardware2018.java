@@ -84,12 +84,43 @@ public class hardware2018 {
         armExtendMotor.setPower(0);
         armCombineMotor.setPower(0);
 
+        //Brake mode on climb and arm motors to prevent creep
         armJointMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armExtendMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         climbMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        //Brake mode on drive motors to make movement more accurate
+        leftDriveFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftDriveRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDriveFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDriveRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        //set motors in starting state
+        leftDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDriveFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightDriveRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        climbMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armCombineMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
 
+    public void StopAll()
+    {
+        // Set all motors to zero power
+        leftDriveFront.setPower(0);
+        leftDriveRear.setPower(0);
+        rightDriveFront.setPower(0);
+        rightDriveRear.setPower(0);
+        climbMotor.setPower(0);
+        armJointMotor.setPower(0);
+        armExtendMotor.setPower(0);
+        armCombineMotor.setPower(0);
+    }
+
+    public void ResetEncoders()
+    {
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
         // We may need to get rid of the run using encoder things because it could be causing problems.
@@ -110,5 +141,118 @@ public class hardware2018 {
         armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armCombineMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void Forward()
+    {
+        Forward(0);
+    }
+    public void Forward(double Power)
+    {
+        Power = Math.abs(Power);
+        leftDriveRear.setPower(Power);
+        leftDriveFront.setPower(Power);
+        rightDriveRear.setPower(Power);
+        rightDriveFront.setPower(Power);
+    }
+
+    public void Backwards()
+    {
+        Backwards(1);
+    }
+    public void Backwards(double Power)
+    {
+        Power = -Math.abs(Power);
+        leftDriveRear.setPower(Power);
+        leftDriveFront.setPower(Power);
+        rightDriveRear.setPower(Power);
+        rightDriveFront.setPower(Power);
+    }
+
+    public void StopDrive()
+    {
+        leftDriveRear.setPower(0);
+        leftDriveFront.setPower(0);
+        rightDriveRear.setPower(0);
+        rightDriveFront.setPower(0);
+    }
+
+    public void Left()
+    {
+        Left(1);
+    }
+    public void Left(double Power)
+    {
+        Power = Math.abs(Power);
+        leftDriveRear.setPower(-Power);
+        leftDriveFront.setPower(-Power);
+        rightDriveRear.setPower(Power);
+        rightDriveFront.setPower(Power);
+    }
+
+    public void Right()
+    {
+        Right(1);
+    }
+    public void Right(double Power)
+    {
+        Power = Math.abs(Power);
+        leftDriveRear.setPower(Power);
+        leftDriveFront.setPower(Power);
+        rightDriveRear.setPower(-Power);
+        rightDriveFront.setPower(-Power);
+    }
+
+    public void ArmJointRaise()
+    {
+        armJointMotor.setPower(1);
+    }
+    public void ArmJointDrop()
+    {
+        armJointMotor.setPower(-1);
+    }
+    public void ArmJointStop()
+    {
+        armJointMotor.setPower(0);
+    }
+
+    public void ArmExtendOut()
+    {
+        armExtendMotor.setPower(1);
+    }
+    public void ArmExtendIn()
+    {
+        armExtendMotor.setPower(-1);
+    }
+    public void ArmExtendStop()
+    {
+        armExtendMotor.setPower(0);
+    }
+
+    public void CombineForward()
+    {
+        //TODO - double check direction
+        armCombineMotor.setPower(1);
+    }
+    public void CombineReverse()
+    {
+        armCombineMotor.setPower(-1);
+    }
+    public void CombineStop()
+    {
+        armCombineMotor.setPower(0);
+    }
+
+    public void HopperServoOpen()
+    {
+        armCombineServo.setPosition(1);
+    }
+    public void HopperServoClose()
+    {
+        armCombineServo.setPosition(0.6);
+    }
+    public void HopperServoFlipArm()
+    {
+        armCombineServo.setPosition(0);
     }
 }
