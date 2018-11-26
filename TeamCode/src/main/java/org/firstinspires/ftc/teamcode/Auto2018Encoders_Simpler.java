@@ -200,16 +200,8 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         }
         else if(goldPosition == MineralDetector.MineralPosition.Right)
         {
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 450)
-            {
-                robot.Right();
-            }
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 800)
-            {
-                robot.Forward();
-            }
+            robot.DriveTimed(this, DriveDirection.Right, 450);
+            robot.DriveTimed(this, DriveDirection.Forward, 800);
         }
         else if(goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {

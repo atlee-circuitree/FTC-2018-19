@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -141,6 +143,24 @@ public class hardware2018 {
         armJointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armCombineMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void DriveTimed(LinearOpMode opModeObject, DriveDirection direction, int timeInMilliseconds)
+    {
+        ElapsedTime runtime = new ElapsedTime();
+        runtime.reset();
+        while(opModeObject.opModeIsActive() && runtime.milliseconds() < timeInMilliseconds)
+        {
+            if(direction == DriveDirection.Forward)
+                Forward();
+            else if(direction  == DriveDirection.Backward)
+                Backwards();
+            else if(direction == DriveDirection.Left)
+                Left();
+            else if(direction == DriveDirection.Right)
+                Right();
+        }
+        StopDrive();
     }
 
     public void Forward()
