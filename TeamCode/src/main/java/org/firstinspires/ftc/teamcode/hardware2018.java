@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -40,7 +41,8 @@ public class hardware2018 {
     public ServoImplEx armCombineServo = null;
     public ServoImplEx armReleaseServo = null;
 
-    public DistanceSensor sensorRange = null;
+    public DistanceSensor sensorRangeLeft = null;
+    public DistanceSensor sensorRangeRight = null;
 
     /* Local OpMode members. */
     HardwareMap hwMap = null;
@@ -69,7 +71,8 @@ public class hardware2018 {
         armCombineMotor = hwMap.get(DcMotor.class, "armWheelMotor");
         armCombineServo = (ServoImplEx)hwMap.get(Servo.class, "armCombineServo");
         armReleaseServo = (ServoImplEx)hwMap.get(Servo.class, "armReleaseServo");
-        sensorRange = hwMap.get(DistanceSensor.class, "distanceLeft");
+        sensorRangeLeft = hwMap.get(DistanceSensor.class, "colorLeft");
+        sensorRangeRight = hwMap.get(DistanceSensor.class, "colorRight");
 
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);

@@ -100,15 +100,8 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
 
         //Timing based forward movement
         runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < 200)
-        {
-            robot.rightDriveRear.setPower(1);
-            robot.rightDriveFront.setPower(1);
-            robot.leftDriveRear.setPower(1);
-            robot.leftDriveFront.setPower(1);
-        }
 
-        robot.StopAll();
+        robot.DriveTimed(this, DriveDirection.Forward, 200);
 
         runtime.reset();
 
@@ -178,25 +171,13 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         robot.StopAll();
 
         runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < 200)
-        {
-            robot.Forward();
-        }
-        robot.StopAll();
+        robot.DriveTimed(this, DriveDirection.Forward, 200);
 
 
         if(goldPosition == MineralDetector.MineralPosition.Left)
         {
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 450)
-            {
-                robot.Left();
-            }
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 800)
-            {
-                robot.Forward();
-            }
+            robot.DriveTimed(this, DriveDirection.Left, 450);
+            robot.DriveTimed(this, DriveDirection.Forward, 800);
         }
         else if(goldPosition == MineralDetector.MineralPosition.Right)
         {
@@ -205,11 +186,7 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         }
         else if(goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 800)
-            {
-                robot.Forward();
-            }
+            robot.DriveTimed(this, DriveDirection.Forward, 800);
         }
 
         robot.StopAll();
