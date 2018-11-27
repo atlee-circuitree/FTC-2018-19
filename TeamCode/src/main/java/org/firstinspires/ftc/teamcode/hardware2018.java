@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -10,6 +11,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
  * This is NOT an opmode.
@@ -45,6 +52,17 @@ public class hardware2018 {
     public DistanceSensor sensorRangeRight = null;
     public DistanceSensor sensorDistance = null;
 
+    // The IMU sensor object
+    public BNO055IMU imu = null;
+
+    // State used for updating telemetry
+    Orientation angles;
+    Acceleration gravity;
+
+    Orientation lastAngles = new Orientation();
+    double globalAngle, power = .30, correction;
+    boolean aButton, bButton, touched;
+
     /* Local OpMode members. */
     HardwareMap hwMap = null;
     private ElapsedTime period = new ElapsedTime();
@@ -76,6 +94,21 @@ public class hardware2018 {
         sensorRangeLeft = hwMap.get(DistanceSensor.class, "colorLeft");
         sensorRangeRight = hwMap.get(DistanceSensor.class, "colorRight");
         sensorDistance = hwMap.get(DistanceSensor.class, "distance");
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled = false;
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        imu = hwMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(parameters);
 
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
@@ -113,6 +146,8 @@ public class hardware2018 {
         armCombineMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
+
+
 
     public void StopAll()
     {
@@ -280,5 +315,83 @@ public class hardware2018 {
     public void HopperServoFlipArm()
     {
         armCombineServo.setPosition(0);
+    }
+
+    public void Rotate(int degrees, double Power)
+    {
+        double leftPower, rightPower;
+
+        double adjustment = 0;
+        if (power <= 0.5) {
+            adjustment = 5.2;
+        } else if (power <= 0.8) {
+            adjustment = 10;
+        } else {
+            adjustment = 15;
+        }
+        //0.5 = 5 degress overshoot
+        //0.8 = 10 degrees overshoot
+        //1 = 15-20
+
+        // restart imu movement tracking.
+        resetAngle();
+
+        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
+        // clockwise (right).
+
+        if (degrees < 0) {   // turn right.
+            Right(power);
+        } else if (degrees > 0) {   // turn left.
+            Left(power);
+        } else return;
+
+
+        // rotate until turn is completed.
+        if (degrees < 0) {
+            // On right turn we have to get off zero first.
+            while (opModeObject.opModeIsActive() && getAngle() == 0) {
+            }
+
+            while (opModeObject.opModeIsActive() && getAngle() > (degrees + adjustment)) {
+            }
+        } else    // left turn.
+        {
+            while (opModeObject.opModeIsActive() && getAngle() < (degrees - adjustment)) {
+            }
+        }
+
+        // turn the motors off.
+        StopDrive();
+        // wait for rotation to stop.
+        opModeObject.sleep(500);
+
+        // reset angle tracking on new heading.
+        resetAngle();
+    }
+
+    private void resetAngle() {
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        globalAngle = 0;
+    }
+    private double getAngle() {
+        // We experimentally determined the Z axis is the axis we want to use for heading angle.
+        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+
+        if (deltaAngle < -180)
+            deltaAngle += 360;
+        else if (deltaAngle > 180)
+            deltaAngle -= 360;
+
+        globalAngle += deltaAngle;
+
+        lastAngles = angles;
+
+        return globalAngle;
     }
 }
