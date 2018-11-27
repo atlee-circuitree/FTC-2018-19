@@ -43,6 +43,7 @@ public class hardware2018 {
 
     public DistanceSensor sensorRangeLeft = null;
     public DistanceSensor sensorRangeRight = null;
+    public DistanceSensor sensorDistance = null;
 
     /* Local OpMode members. */
     HardwareMap hwMap = null;
@@ -73,6 +74,7 @@ public class hardware2018 {
         armReleaseServo = (ServoImplEx)hwMap.get(Servo.class, "armReleaseServo");
         sensorRangeLeft = hwMap.get(DistanceSensor.class, "colorLeft");
         sensorRangeRight = hwMap.get(DistanceSensor.class, "colorRight");
+        sensorDistance = hwMap.get(DistanceSensor.class, "distance");
 
         //ensures motors are rotating in the correct direction.  One side must always be reversed
         rightDriveFront.setDirection(DcMotor.Direction.REVERSE);
