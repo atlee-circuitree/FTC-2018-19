@@ -24,7 +24,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 public class hardware2018 {
-    /* Public OpMode members. */
+    LinearOpMode opModeObject = null;
 
     //motors at base that power wheels
     public DcMotor leftDriveFront = null;
@@ -54,7 +54,8 @@ public class hardware2018 {
     }
 
     /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
+    public void init(LinearOpMode currentOpMode, HardwareMap ahwMap) {
+        opModeObject = currentOpMode;
         // save reference to HW Map
         hwMap = ahwMap;
 
@@ -150,7 +151,7 @@ public class hardware2018 {
         armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public void DriveTimed(LinearOpMode opModeObject, DriveDirection direction, int timeInMilliseconds)
+    public void DriveTimed(DriveDirection direction, int timeInMilliseconds)
     {
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();

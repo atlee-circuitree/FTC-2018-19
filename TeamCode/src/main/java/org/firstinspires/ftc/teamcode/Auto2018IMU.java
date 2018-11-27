@@ -81,7 +81,7 @@ public class Auto2018IMU extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        robot.init(hardwareMap);
+        robot.init(this, hardwareMap);
         robot.ResetEncoders();
 
         mineralDetector.init(hardwareMap, telemetry);

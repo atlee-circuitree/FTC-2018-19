@@ -60,7 +60,7 @@ public class TeleOp2018Drive extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        robot.init(hardwareMap);
+        robot.init(this, hardwareMap);
 
         robot.armCombineServo.setPosition(0.6);
 

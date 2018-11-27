@@ -69,7 +69,7 @@ public class armReleasePOC extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        robot.init(hardwareMap);
+        robot.init(this, hardwareMap);
 
 
 
