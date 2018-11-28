@@ -29,7 +29,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// code based on BergTest throught the copy/paste paradime (Im saying dont use this)
+// code based on BergTest through the copy/paste paradime (Im saying dont use this). EDIT: looks like we are using this.
 
 package org.firstinspires.ftc.teamcode;
 
@@ -80,6 +80,7 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         runtime.reset();
 
         // Setup a variable for each drive wheel to save power level for telemetry
+	//Does not appear to be used for anything right now, has been moved to hardware2018
         double leftPower;
         double rightPower;
         double combineSpeed = 0;
@@ -103,6 +104,7 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
 
         runtime.reset();
 
+        //TODO:move this to it's own file to provide same code for the not crater
 	//the dropping part
         if (goldPosition == MineralDetector.MineralPosition.Center) { 
             while (opModeIsActive() && !dropStageCompleted) {
