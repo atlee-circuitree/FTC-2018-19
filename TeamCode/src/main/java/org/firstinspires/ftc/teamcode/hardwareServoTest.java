@@ -65,7 +65,7 @@ public class hardwareServoTest extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        robot.init(hardwareMap);
+        robot.init(this, hardwareMap);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -75,9 +75,9 @@ public class hardwareServoTest extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            if(gamepad1.left_bumper)
+            if (gamepad1.left_bumper)
                 robot.armCombineServo.setPosition(0);
-            else if(gamepad1.right_bumper)
+            else if (gamepad1.right_bumper)
                 robot.armCombineServo.setPosition(0.5);
 
             // Show the elapsed game time and wheel power.

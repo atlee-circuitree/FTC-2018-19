@@ -65,7 +65,7 @@ public class basicAutoTest extends LinearOpMode {
         telemetry.addData("DO NOT RUN AT COMP", "Initialized");
         telemetry.update();
 
-        robot.init(hardwareMap);
+        robot.init(this, hardwareMap);
 
 
         /* Wait for the game to start (driver presses PLAY)

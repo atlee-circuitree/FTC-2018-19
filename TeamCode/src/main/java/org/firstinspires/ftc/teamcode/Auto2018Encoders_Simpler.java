@@ -58,7 +58,7 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        robot.init(hardwareMap);
+        robot.init(this, hardwareMap);
         robot.ResetEncoders();
 
         mineralDetector.init(hardwareMap, telemetry);
@@ -68,11 +68,9 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         MineralDetector.MineralPosition goldPosition = MineralDetector.MineralPosition.Unknown;
         MineralDetector.MineralPosition tempPosition = MineralDetector.MineralPosition.Unknown;
         // Wait for the game to start (driver presses PLAY)
-        while(!isStarted())
-        {
+        while (!isStarted()) {
             tempPosition = mineralDetector.GetMineralPosition(); //read mineral position before we drop
-            if(tempPosition != MineralDetector.MineralPosition.Unknown)
-            {
+            if (tempPosition != MineralDetector.MineralPosition.Unknown) {
                 goldPosition = tempPosition;
             }
         }
@@ -100,15 +98,8 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
 
         //Timing based forward movement
         runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < 200)
-        {
-            robot.rightDriveRear.setPower(1);
-            robot.rightDriveFront.setPower(1);
-            robot.leftDriveRear.setPower(1);
-            robot.leftDriveFront.setPower(1);
-        }
 
-        robot.StopAll();
+        robot.DriveTimed(DriveDirection.Forward, 200);
 
         runtime.reset();
 
@@ -180,46 +171,18 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
 	//end of dropping 
 	
         runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < 200)
-        {
-            robot.Forward();
-        }
-        robot.StopAll();
+        robot.DriveTimed(DriveDirection.Forward, 200);
 
 
-        if(goldPosition == MineralDetector.MineralPosition.Left)
+        if (goldPosition == MineralDetector.MineralPosition.Left) {
+            robot.DriveTimed(DriveDirection.Left, 450);
+            robot.DriveTimed(DriveDirection.Forward, 800);
+        } else if (goldPosition == MineralDetector.MineralPosition.Right) {
+            robot.DriveTimed(DriveDirection.Right, 450);
+            robot.DriveTimed(DriveDirection.Forward, 800);
+        } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 450)
-            {
-                robot.Left();
-            }
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 800)
-            {
-                robot.Forward();
-            }
-        }
-        else if(goldPosition == MineralDetector.MineralPosition.Right)
-        {
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 450)
-            {
-                robot.Right();
-            }
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 800)
-            {
-                robot.Forward();
-            }
-        }
-        else if(goldPosition == MineralDetector.MineralPosition.Center) //gold center
-        {
-            runtime.reset();
-            while(opModeIsActive() && runtime.milliseconds() < 800)
-            {
-                robot.Forward();
-            }
+            robot.DriveTimed(DriveDirection.Forward, 800);
         }
 
         robot.StopAll();

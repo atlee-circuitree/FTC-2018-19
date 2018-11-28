@@ -66,7 +66,7 @@ public class halfStopAuto extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        robot.init(hardwareMap);
+        robot.init(this, hardwareMap);
 
 
         // Wait for the game to start (driver presses PLAY)
