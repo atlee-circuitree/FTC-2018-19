@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  * This is NOT an opmode.
  * This class can be used to drop the 2018 bot
@@ -16,26 +18,31 @@ public class drop18 {
 
     hardware2018 robot = null;
     MineralDetector mineralDetector = null;
-    telemetry
+    Telemetry telemetry = null;
     private ElapsedTime runtime = new ElapsedTime();
+    LinearOpMode opMode = null;
 
     /* Constructor */
-    public drop18(hardware2018 robotParam, MineralDetector mineralParam) {
+    public drop18(hardware2018 robotParam, MineralDetector mineralParam, Telemetry telemetryParam, LinearOpMode opModeParam) {
         robot = robotParam;
+        telemetry = telemetryParam;
         mineralDetector = mineralParam;
+        opMode = opModeParam;
     }
 
     public void dropBot(){
 
-	boolean dropStageCompleted = false;
-	int dropPosition = 21000;
+        MineralDetector.MineralPosition goldPosition = MineralDetector.MineralPosition.Unknown;
+
+	    boolean dropStageCompleted = false;
+	    int dropPosition = 21000;
         int jointRaisePosition = 1800;  //1400 - better height for collecting
         int extendOutPosition = 5000;
 	
         //run climb motor until we've dropped
-while (robot.climbMotor.getCurrentPosition() < dropPosition) {
+        while (robot.climbMotor.getCurrentPosition() < dropPosition) {
             robot.climbMotor.setPower(1);
-        }
+            }
         robot.StopAll();
 
         robot.DriveTimed(DriveDirection.Forward, 200);
@@ -45,7 +52,7 @@ while (robot.climbMotor.getCurrentPosition() < dropPosition) {
         
 	//the dropping part
         if (goldPosition == MineralDetector.MineralPosition.Center) { 
-            while (!dropStageCompleted) {
+            while ( opMode.opModeIsActive() && !dropStageCompleted) {
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
                 telemetry.addData("Gold Position", goldPosition);
 
@@ -74,7 +81,7 @@ while (robot.climbMotor.getCurrentPosition() < dropPosition) {
                 telemetry.update();
             } 
         } else {
-            while (opModeIsActive() && !dropStageCompleted) {
+            while (opMode.opModeIsActive() && !dropStageCompleted) {
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
                 telemetry.addData("Gold Position", goldPosition);
 
