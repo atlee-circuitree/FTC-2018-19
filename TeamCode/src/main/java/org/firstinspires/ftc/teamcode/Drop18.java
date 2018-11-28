@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 //TODO: make thing work
 
-public class drop18 {
+public class Drop18 {
 
     hardware2018 robot = null;
     MineralDetector mineralDetector = null;
@@ -23,7 +23,7 @@ public class drop18 {
     LinearOpMode opMode = null;
 
     /* Constructor */
-    public drop18(hardware2018 robotParam, MineralDetector mineralParam, Telemetry telemetryParam, LinearOpMode opModeParam) {
+    public Drop18(hardware2018 robotParam, MineralDetector mineralParam, Telemetry telemetryParam, LinearOpMode opModeParam) {
         robot = robotParam;
         telemetry = telemetryParam;
         mineralDetector = mineralParam;
