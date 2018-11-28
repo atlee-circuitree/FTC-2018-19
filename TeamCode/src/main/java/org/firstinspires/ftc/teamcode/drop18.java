@@ -14,17 +14,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class drop18 {
 
-    hardware2018 robot = new hardware2018();
-    MineralDetector mineralDetector = new MineralDetector();
+    hardware2018 robot = null;
+    MineralDetector mineralDetector = null;
+    telemetry
     private ElapsedTime runtime = new ElapsedTime();
 
     /* Constructor */
-    public drop18() {
+    public drop18(hardware2018 robotParam, MineralDetector mineralParam) {
+        robot = robotParam;
+        mineralDetector = mineralParam;
     }
 
     public void dropBot(){
-        robot.init(this, hardwareMap);
-        mineralDetector.init(hardwareMap, telemetry);
+
 	boolean dropStageCompleted = false;
 	int dropPosition = 21000;
         int jointRaisePosition = 1800;  //1400 - better height for collecting
@@ -35,9 +37,6 @@ while (robot.climbMotor.getCurrentPosition() < dropPosition) {
             robot.climbMotor.setPower(1);
         }
         robot.StopAll();
-
-        //Timing based forward movement
-        runtime.reset();
 
         robot.DriveTimed(DriveDirection.Forward, 200);
 
