@@ -103,7 +103,8 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
 
         runtime.reset();
 
-        if (goldPosition == MineralDetector.MineralPosition.Center) {
+	//the dropping part
+        if (goldPosition == MineralDetector.MineralPosition.Center) { 
             while (opModeIsActive() && !dropStageCompleted) {
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
                 telemetry.addData("Gold Position", goldPosition);
@@ -131,7 +132,7 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
 
                 // Show the elapsed game time and wheel power.
                 telemetry.update();
-            }
+            } 
         } else {
             while (opModeIsActive() && !dropStageCompleted) {
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -167,7 +168,8 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         telemetry.update();
 
         robot.StopAll();
-
+	//end of dropping 
+	
         runtime.reset();
         robot.DriveTimed(DriveDirection.Forward, 200);
 
