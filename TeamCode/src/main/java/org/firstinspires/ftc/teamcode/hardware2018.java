@@ -16,7 +16,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
+import static java.lang.Double.isNaN;
 
 /**
  * This is NOT an opmode.
@@ -89,8 +92,8 @@ public class hardware2018 {
         armJointMotor = hwMap.get(DcMotor.class, "armJointMotor");
         armExtendMotor = hwMap.get(DcMotor.class, "armExtendMotor");
         armCombineMotor = hwMap.get(DcMotor.class, "armWheelMotor");
-        armCombineServo = (ServoImplEx)hwMap.get(Servo.class, "armCombineServo");
-        armReleaseServo = (ServoImplEx)hwMap.get(Servo.class, "armReleaseServo");
+        armCombineServo = (ServoImplEx) hwMap.get(Servo.class, "armCombineServo");
+        armReleaseServo = (ServoImplEx) hwMap.get(Servo.class, "armReleaseServo");
         sensorRangeLeft = hwMap.get(DistanceSensor.class, "colorLeft");
         sensorRangeRight = hwMap.get(DistanceSensor.class, "colorRight");
         sensorDistance = hwMap.get(DistanceSensor.class, "distance");
@@ -147,10 +150,8 @@ public class hardware2018 {
         armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-
-
-    public void StopAll()
-    {
+    //Stops all motors - should be used at the end of OpModes
+    public void StopAll() {
         // Set all motors to zero power
         leftDriveFront.setPower(0);
         leftDriveRear.setPower(0);
@@ -162,8 +163,8 @@ public class hardware2018 {
         armCombineMotor.setPower(0);
     }
 
-    public void ResetEncoders()
-    {
+    //Resets encoders to 0
+    public void ResetEncoders() {
         // Set all motors to run with encoders.
         // Use RUN_WITHOUT_ENCODER if encoders are not installed or not wanted.
         // We may need to get rid of the run using encoder things because it could be causing problems.
@@ -186,64 +187,78 @@ public class hardware2018 {
         armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public void DriveTimed(DriveDirection direction, int timeInMilliseconds)
-    {
+    public void DriveTimed(DriveDirection direction, int timeInMilliseconds) {
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
-        while(opModeObject.opModeIsActive() && runtime.milliseconds() < timeInMilliseconds)
-        {
-            if(direction == DriveDirection.Forward)
+        while (opModeObject.opModeIsActive() && runtime.milliseconds() < timeInMilliseconds) {
+            if (direction == DriveDirection.Forward)
                 Forward();
-            else if(direction  == DriveDirection.Backward)
+            else if (direction == DriveDirection.Backward)
                 Backwards();
-            else if(direction == DriveDirection.Left)
+            else if (direction == DriveDirection.Left)
                 Left();
-            else if(direction == DriveDirection.Right)
+            else if (direction == DriveDirection.Right)
                 Right();
         }
         StopDrive();
     }
 
-    public void Forward()
-    {
-        Forward(0);
+    //Drives forward until obstructed or max time has passed
+    public void DriveForwardCheckObstruction(int maxTimeInMilliseconds) {
+        ElapsedTime runtime = new ElapsedTime();
+        runtime.reset();
+        Forward();
+        while (opModeObject.opModeIsActive() && runtime.milliseconds() < maxTimeInMilliseconds) {
+            if(FrontObstructed())
+            {
+                StopDrive();
+                break;
+            }
+        }
+        StopDrive();
     }
-    public void Forward(double Power)
-    {
-        Power = Math.abs(Power);
+
+    //Drive forward at 100% power
+    public void Forward() {
+        Forward(1);
+    }
+
+    //Drive forward at specified power
+    public void Forward(double Power) {
+        Power = Math.abs(Power); //make sure it's positive
         leftDriveRear.setPower(Power);
         leftDriveFront.setPower(Power);
         rightDriveRear.setPower(Power);
         rightDriveFront.setPower(Power);
     }
 
-    public void Backwards()
-    {
+    //Drive backwards at 100% power
+    public void Backwards() {
         Backwards(1);
     }
-    public void Backwards(double Power)
-    {
-        Power = -Math.abs(Power);
+
+    //Drive backwards at 100% power
+    public void Backwards(double Power) {
+        Power = -Math.abs(Power); //make number negative so it's backwards
         leftDriveRear.setPower(Power);
         leftDriveFront.setPower(Power);
         rightDriveRear.setPower(Power);
         rightDriveFront.setPower(Power);
     }
 
-    public void StopDrive()
-    {
+    //Stops just the drive motors
+    public void StopDrive() {
         leftDriveRear.setPower(0);
         leftDriveFront.setPower(0);
         rightDriveRear.setPower(0);
         rightDriveFront.setPower(0);
     }
 
-    public void Left()
-    {
+    public void Left() {
         Left(1);
     }
-    public void Left(double Power)
-    {
+
+    public void Left(double Power) {
         Power = Math.abs(Power);
         leftDriveRear.setPower(-Power);
         leftDriveFront.setPower(-Power);
@@ -251,12 +266,11 @@ public class hardware2018 {
         rightDriveFront.setPower(Power);
     }
 
-    public void Right()
-    {
+    public void Right() {
         Right(1);
     }
-    public void Right(double Power)
-    {
+
+    public void Right(double Power) {
         Power = Math.abs(Power);
         leftDriveRear.setPower(Power);
         leftDriveFront.setPower(Power);
@@ -264,61 +278,56 @@ public class hardware2018 {
         rightDriveFront.setPower(-Power);
     }
 
-    public void ArmJointRaise()
-    {
+    public void ArmJointRaise() {
         armJointMotor.setPower(1);
     }
-    public void ArmJointDrop()
-    {
+
+    public void ArmJointDrop() {
         armJointMotor.setPower(-1);
     }
-    public void ArmJointStop()
-    {
+
+    public void ArmJointStop() {
         armJointMotor.setPower(0);
     }
 
-    public void ArmExtendOut()
-    {
+    public void ArmExtendOut() {
         armExtendMotor.setPower(1);
     }
-    public void ArmExtendIn()
-    {
+
+    public void ArmExtendIn() {
         armExtendMotor.setPower(-1);
     }
-    public void ArmExtendStop()
-    {
+
+    public void ArmExtendStop() {
         armExtendMotor.setPower(0);
     }
 
-    public void CombineForward()
-    {
+    public void CombineForward() {
         //TODO - double check direction
         armCombineMotor.setPower(1);
     }
-    public void CombineReverse()
-    {
+
+    public void CombineReverse() {
         armCombineMotor.setPower(-1);
     }
-    public void CombineStop()
-    {
+
+    public void CombineStop() {
         armCombineMotor.setPower(0);
     }
 
-    public void HopperServoOpen()
-    {
+    public void HopperServoOpen() {
         armCombineServo.setPosition(1);
     }
-    public void HopperServoClose()
-    {
+
+    public void HopperServoClose() {
         armCombineServo.setPosition(0.6);
     }
-    public void HopperServoFlipArm()
-    {
+
+    public void HopperServoFlipArm() {
         armCombineServo.setPosition(0);
     }
 
-    public void Rotate(int degrees, double Power)
-    {
+    public void Rotate(int degrees, double Power) {
         double leftPower, rightPower;
 
         double adjustment = 0;
@@ -373,6 +382,7 @@ public class hardware2018 {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         globalAngle = 0;
     }
+
     private double getAngle() {
         // We experimentally determined the Z axis is the axis we want to use for heading angle.
         // We have to process the angle because the imu works in euler angles so the Z axis is
@@ -393,5 +403,22 @@ public class hardware2018 {
         lastAngles = angles;
 
         return globalAngle;
+    }
+
+    private boolean FrontObstructed() {
+        boolean obstructed = false;
+
+        double distLeft = sensorRangeLeft.getDistance(DistanceUnit.CM);
+        double distRight = sensorRangeRight.getDistance(DistanceUnit.CM);
+        double longDistance = sensorDistance.getDistance(DistanceUnit.CM);
+
+        if (longDistance > 15 && longDistance < 30) {
+            obstructed = true;
+        } else if (longDistance < 15 && !isNaN(distRight) && distRight < 18) {
+            obstructed = true;
+        } else if (!isNaN(distLeft) && distLeft < 18)
+            obstructed = true;
+
+        return obstructed;
     }
 }
