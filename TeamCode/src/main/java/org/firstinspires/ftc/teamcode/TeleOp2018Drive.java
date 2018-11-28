@@ -62,6 +62,9 @@ public class TeleOp2018Drive extends LinearOpMode {
 
         robot.init(this, hardwareMap);
 
+        if (gamepad1.dpad_up)
+            robot.ResetEncoders();
+
         robot.armCombineServo.setPosition(0.6);
 
 
@@ -69,8 +72,8 @@ public class TeleOp2018Drive extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-	//create a timerVarible
-	
+        //create a timerVarible
+
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
@@ -92,7 +95,7 @@ public class TeleOp2018Drive extends LinearOpMode {
             leftPower = Range.clip(drive + turn, -1, 1);
             rightPower = Range.clip(drive - turn, -1, 1);
 
-            if(gamepad1.left_bumper) {
+            if (gamepad1.left_bumper) {
                 leftPower = (leftPower / 2);
                 rightPower = (rightPower / 2);
             }
@@ -116,7 +119,7 @@ public class TeleOp2018Drive extends LinearOpMode {
                 combineSpeed = 1;
             } else if (gamepad2.right_bumper) {
                 combineSpeed = -1;
-            } else if (gamepad2.right_trigger > .85){
+            } else if (gamepad2.right_trigger > .85) {
                 combineSpeed = 0;
             }
 
@@ -153,6 +156,11 @@ public class TeleOp2018Drive extends LinearOpMode {
             {
                 armCombineOpenEndTime = 0;
                 robot.armCombineServo.setPosition(0.6);
+            }
+            if (gamepad2.dpad_down || gamepad1.dpad_down) {
+                robot.armCombineServo.setPosition(0);
+            } else if (armCombineOpenEndTime == 0) {
+                robot.armCombineServo.setPosition(0.7);
             }
 
             //drive the climbing/drop motor
@@ -191,5 +199,7 @@ public class TeleOp2018Drive extends LinearOpMode {
             //telemetry.addData("Android roll", AndroidOrientation.getRoll());
 
         }
+
+        robot.StopAll();
     }
 }
