@@ -42,9 +42,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Drives arm motors with a controller for testing and positioning the robot for measuring
  */
 
-@Autonomous(name = "Autonomous2018Encoders_Simpler", group = "Linear Opmode")
+@Autonomous(name = "No_crater_side_auto", group = "Linear Opmode")
 
-public class Auto2018Encoders_Simpler extends LinearOpMode {
+public class noCraterSide extends LinearOpMode {
 
 
     // Declare OpMode members.
@@ -88,22 +88,32 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         double combineSpeed = 0;
         double armCombineOpenEndTime = 0;
 
+        //drops robot
         drop18.dropBot();
-	//end of dropping 
+
 	
         runtime.reset();
-        robot.DriveTimed(DriveDirection.Forward, 200);
+        robot.DriveTimed(DriveDirection.Forward, 600);
+
+        runtime.reset();
+        while(runtime.milliseconds() > 4000) {
+            robot.ArmExtendOut();
+        }
+        robot.CombineForward();
+        sleep(300);
+        robot.CombineStop();
+        robot.DriveTimed(DriveDirection.Backward, 400);
 
 
         if (goldPosition == MineralDetector.MineralPosition.Left) {
             robot.DriveTimed(DriveDirection.Left, 450);
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            robot.DriveTimed(DriveDirection.Forward, 700);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
             robot.DriveTimed(DriveDirection.Right, 450);
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            robot.DriveTimed(DriveDirection.Forward, 700);
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            robot.DriveTimed(DriveDirection.Forward, 700);
         }
 
         robot.StopAll();
