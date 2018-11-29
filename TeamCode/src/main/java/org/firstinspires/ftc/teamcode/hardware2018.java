@@ -187,18 +187,24 @@ public class hardware2018 {
         armExtendMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+
     public void DriveTimed(DriveDirection direction, int timeInMilliseconds) {
+        DriveTimed(direction, timeInMilliseconds, 1);
+    }
+
+    public void DriveTimed(DriveDirection direction, int timeInMilliseconds, int Power) {
+
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
         while (opModeObject.opModeIsActive() && runtime.milliseconds() < timeInMilliseconds) {
             if (direction == DriveDirection.Forward)
-                Forward();
+                Forward(Power);
             else if (direction == DriveDirection.Backward)
-                Backwards();
+                Backwards(Power);
             else if (direction == DriveDirection.Left)
-                Left();
+                Left(Power);
             else if (direction == DriveDirection.Right)
-                Right();
+                Right(Power);
         }
         StopDrive();
     }
