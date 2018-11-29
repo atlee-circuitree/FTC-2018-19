@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 
 
-//TODO: make thing work
+
 
 public class Drop18 {
 
@@ -28,6 +28,7 @@ public class Drop18 {
         telemetry = telemetryParam;
         mineralDetector = mineralParam;
         opMode = opModeParam;
+
     }
 
     public void dropBot(){
@@ -62,21 +63,24 @@ public class Drop18 {
                     dropStageCompleted = true;
                 }
 
+                // unfurl arm
                 if (runtime.milliseconds() < 1000)
                     robot.armReleaseServo.setPosition(0);
                 else
                     robot.armReleaseServo.setPwmDisable();
 
+                //raise arm
                 if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
                     robot.ArmJointRaise();
                 else
                     robot.ArmJointStop();
 
-                if (runtime.milliseconds() > 2000 && robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
+                //extend arm (should be disabled)
+              /*  if (runtime.milliseconds() > 2000 && robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
                     robot.ArmExtendOut();
                 else
                     robot.ArmExtendStop();
-
+                */
                 // Show the elapsed game time and wheel power.
                 telemetry.update();
             }
