@@ -152,15 +152,13 @@ public class TeleOp2018Drive extends LinearOpMode {
                 armCombineOpenEndTime = runtime.milliseconds() + 2000; //right now + 2 seconds.  We use milliseconds instead of seconds to avoid rounding problems
                 robot.armCombineServo.setPosition(1);
             }
-            if (armCombineOpenEndTime < runtime.milliseconds()) //have our 2 seconds passed?
+            else if (armCombineOpenEndTime < runtime.milliseconds()) //have our 2 seconds passed?
             {
                 armCombineOpenEndTime = 0;
                 robot.armCombineServo.setPosition(0.6);
             }
-            if (gamepad2.dpad_down || gamepad1.dpad_down) {
+            else if (gamepad2.dpad_down || gamepad1.dpad_down) {
                 robot.armCombineServo.setPosition(0);
-            } else if (armCombineOpenEndTime == 0) {
-                robot.armCombineServo.setPosition(0.7);
             }
 
             //drive the climbing/drop motor
