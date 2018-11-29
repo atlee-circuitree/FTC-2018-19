@@ -51,36 +51,7 @@ public class Drop18 {
 
         
 	//the dropping part
-        if (goldPosition == MineralDetector.MineralPosition.Center) { 
-            while ( opMode.opModeIsActive() && !dropStageCompleted) {
-                telemetry.addData("Status", "Run Time: " + runtime.toString());
-                telemetry.addData("Gold Position", goldPosition);
 
-                if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
-                        && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
-                        && robot.climbMotor.getCurrentPosition() >= dropPosition) {
-                    dropStageCompleted = true;
-                }
-
-                if (runtime.milliseconds() < 1000)
-                    robot.armReleaseServo.setPosition(0);
-                else
-                    robot.armReleaseServo.setPwmDisable();
-
-                if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
-                    robot.ArmJointRaise();
-                else
-                    robot.ArmJointStop();
-
-                if (robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
-                    robot.ArmExtendOut();
-                else
-                    robot.ArmExtendStop();
-
-                // Show the elapsed game time and wheel power.
-                telemetry.update();
-            } 
-        } else {
             while (opMode.opModeIsActive() && !dropStageCompleted) {
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
                 telemetry.addData("Gold Position", goldPosition);
@@ -109,7 +80,7 @@ public class Drop18 {
                 // Show the elapsed game time and wheel power.
                 telemetry.update();
             }
-        }
+
 
         telemetry.addData("Gold Position", goldPosition);
         telemetry.update();
