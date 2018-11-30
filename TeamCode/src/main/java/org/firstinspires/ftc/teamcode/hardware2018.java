@@ -192,7 +192,7 @@ public class hardware2018 {
         DriveTimed(direction, timeInMilliseconds, 1);
     }
 
-    public void DriveTimed(DriveDirection direction, int timeInMilliseconds, int Power) {
+    public void DriveTimed(DriveDirection direction, int timeInMilliseconds, double Power) {
 
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
