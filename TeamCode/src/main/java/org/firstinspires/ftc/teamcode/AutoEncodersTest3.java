@@ -102,9 +102,11 @@ public class AutoEncodersTest3 extends LinearOpMode {
         robot.DriveTimed(DriveDirection.Forward, 200);
 
         runtime.reset();
+        telemetry.addData("Operation", "Drop Combine");
+        telemetry.update();
 
-        while(opModeIsActive() && runtime.milliseconds() < 1000)
-        {
+
+        while (opModeIsActive() && runtime.milliseconds() < 2000) {
             robot.armReleaseServo.setPosition(0);
         }
 
@@ -151,25 +153,52 @@ public class AutoEncodersTest3 extends LinearOpMode {
 
 
         if (goldPosition == MineralDetector.MineralPosition.Left) {
+            telemetry.addData("Operation", "Left");
+            telemetry.update();
             robot.Rotate(45, 0.5);
+            telemetry.addData("Operation", "Forward");
+            telemetry.update();
             robot.DriveTimed(DriveDirection.Forward, 800, 0.7);
+            telemetry.addData("Operation", "Back");
+            telemetry.update();
             robot.DriveTimed(DriveDirection.Backward, 800, 0.7);
+            telemetry.addData("Operation", "Rotate Back");
+            telemetry.update();
             robot.Rotate(-45, 0.5);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
+            telemetry.addData("Operation", "Right");
+            telemetry.update();
             robot.Rotate(-45, 0.5);
+            telemetry.addData("Operation", "Forward");
+            telemetry.update();
             robot.DriveTimed(DriveDirection.Forward, 800, 0.7);
+            telemetry.addData("Operation", "Back");
+            telemetry.update();
             robot.DriveTimed(DriveDirection.Backward, 800, 0.7);
+            telemetry.addData("Operation", "Rotate Back");
+            telemetry.update();
             robot.Rotate(45, 0.5);
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
+            telemetry.addData("Operation", "Center");
+            telemetry.update();
             robot.DriveTimed(DriveDirection.Forward, 800, 0.7);
+            telemetry.addData("Operation", "Back");
+            telemetry.update();
             robot.DriveTimed(DriveDirection.Backward, 800, 0.7);
-        }
-        else if (goldPosition == MineralDetector.MineralPosition.Unknown) //gold center
+        } else if (goldPosition == MineralDetector.MineralPosition.Unknown) //gold center
         {
+            telemetry.addData("Operation", "Center Unknown");
+            telemetry.update();
             robot.DriveTimed(DriveDirection.Forward, 800, 0.7);
+            telemetry.addData("Operation", "Back");
+            telemetry.update();
             robot.DriveTimed(DriveDirection.Backward, 800, 0.7);
         }
+
+        telemetry.addData("Operation", "Completed");
+        telemetry.update();
+
         robot.StopAll();
         mineralDetector.Shutdown();
     }
