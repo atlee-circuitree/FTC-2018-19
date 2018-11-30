@@ -65,7 +65,7 @@ public class TeleOp2018Drive extends LinearOpMode {
         if (gamepad1.dpad_up)
             robot.ResetEncoders();
 
-        robot.armCombineServo.setPosition(0.6);
+        robot.armCombineServo.setPosition(0.7);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -148,17 +148,17 @@ public class TeleOp2018Drive extends LinearOpMode {
 
             //open and close the combine's servo to hold/release game pieces - option 2 - open triggered by a button, close after a specific timeframe
             //first time the button is pushed - set a timestamp for when the servo should go back into position
-            if ((gamepad2.a || gamepad1.b) && armCombineOpenEndTime == 0) {
+            if (gamepad2.dpad_down || gamepad1.dpad_down) {
+                robot.armCombineServo.setPosition(0);
+            }
+            else if ((gamepad2.a || gamepad1.b) && armCombineOpenEndTime == 0) {
                 armCombineOpenEndTime = runtime.milliseconds() + 2000; //right now + 2 seconds.  We use milliseconds instead of seconds to avoid rounding problems
                 robot.armCombineServo.setPosition(1);
             }
             else if (armCombineOpenEndTime < runtime.milliseconds()) //have our 2 seconds passed?
             {
                 armCombineOpenEndTime = 0;
-                robot.armCombineServo.setPosition(0.6);
-            }
-            else if (gamepad2.dpad_down || gamepad1.dpad_down) {
-                robot.armCombineServo.setPosition(0);
+                robot.armCombineServo.setPosition(0.7);
             }
 
             //drive the climbing/drop motor

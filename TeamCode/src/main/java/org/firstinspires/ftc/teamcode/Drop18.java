@@ -26,14 +26,12 @@ public class Drop18 {
     public Drop18(hardware2018 robotParam, MineralDetector mineralParam, Telemetry telemetryParam, LinearOpMode opModeParam) {
         robot = robotParam;
         telemetry = telemetryParam;
-        mineralDetector = mineralParam;
         opMode = opModeParam;
 
     }
 
     public void dropBot(){
 
-        MineralDetector.MineralPosition goldPosition = MineralDetector.MineralPosition.Unknown;
 
 	    boolean dropStageCompleted = false;
 	    int dropPosition = 21000;
@@ -55,7 +53,6 @@ public class Drop18 {
 
             while (opMode.opModeIsActive() && !dropStageCompleted) {
                 telemetry.addData("Status", "Run Time: " + runtime.toString());
-                telemetry.addData("Gold Position", goldPosition);
 
                 if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
                         && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
@@ -85,8 +82,13 @@ public class Drop18 {
                 telemetry.update();
             }
 
+            runtime.reset();
+            while(opMode.opModeIsActive() && runtime.milliseconds() < 1000)
+            {
+                robot.armReleaseServo.setPosition(0);
+            }
+            robot.armReleaseServo.setPwmDisable();
 
-        telemetry.addData("Gold Position", goldPosition);
         telemetry.update();
 
         robot.StopAll();

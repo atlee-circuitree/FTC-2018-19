@@ -74,8 +74,12 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
             tempPosition = mineralDetector.GetMineralPosition(); //read mineral position before we drop
             if (tempPosition != MineralDetector.MineralPosition.Unknown) {
                 goldPosition = tempPosition;
+                telemetry.addData("Gold Position", goldPosition);
             }
         }
+        telemetry.addData("Gold Position", goldPosition);
+
+        mineralDetector.Shutdown();
         //waitForStart();
 
         telemetry.update();
@@ -94,19 +98,32 @@ public class Auto2018Encoders_Simpler extends LinearOpMode {
         runtime.reset();
         robot.DriveTimed(DriveDirection.Forward, 200);
 
-
+        telemetry.addData("Gold Position", goldPosition);
+        telemetry.update();
         if (goldPosition == MineralDetector.MineralPosition.Left) {
-            robot.DriveTimed(DriveDirection.Left, 450);
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            telemetry.addData("State", "going left");
+            telemetry.update();
+            robot.Rotate(-45, 0.5);
+            robot.DriveTimed(DriveDirection.Forward, 1600, 0.5);
+            robot.DriveTimed(DriveDirection.Backward, 1600, 0.5);
+            robot.Rotate(45, 0.5);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
-            robot.DriveTimed(DriveDirection.Right, 450);
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            telemetry.addData("State", "going right");
+            telemetry.update();
+            robot.Rotate(45, 0.5);
+            robot.DriveTimed(DriveDirection.Forward, 1600, 0.5);
+            robot.DriveTimed(DriveDirection.Backward, 1600, 0.5);
+            robot.Rotate(-45, 0.5);
+
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            telemetry.addData("State", "going center");
+            telemetry.update();
+            robot.DriveTimed(DriveDirection.Forward, 1600, 0.5);
+            robot.DriveTimed(DriveDirection.Backward, 1600, 0.5);
         }
 
         robot.StopAll();
-        mineralDetector.Shutdown();
+
     }
 }
