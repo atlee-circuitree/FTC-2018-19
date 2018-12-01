@@ -34,6 +34,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -42,9 +43,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Drives arm motors with a controller for testing and positioning the robot for measuring
  */
 
-@Autonomous(name = "No_crater_side_auto", group = "Linear Opmode")
-
-public class noCraterSide extends LinearOpMode {
+@Autonomous(name = "ONLY_crater_side_auto", group = "Linear Opmode")
+@Disabled
+public class CraterSide extends LinearOpMode {
 
 
     // Declare OpMode members.
@@ -92,7 +93,7 @@ public class noCraterSide extends LinearOpMode {
         boolean dropStageCompleted = false;
         int dropPosition = 21000;
         int jointRaisePosition = 1600;  //1400 - better height for collecting
-        int extendOutPosition = 10000;
+        int extendOutPosition = 0;
 
         //run climb motor until we've dropped
         while (opModeIsActive() && robot.climbMotor.getCurrentPosition() < dropPosition) {
@@ -142,7 +143,7 @@ public class noCraterSide extends LinearOpMode {
             // Show the elapsed game time and wheel power.
             telemetry.update();
         }
-        //robot.armCombineServo.setPosition(0.7);
+
 
 
         telemetry.addData("Gold Position", goldPosition);
@@ -152,24 +153,17 @@ public class noCraterSide extends LinearOpMode {
 
 	
         runtime.reset();
-        robot.DriveTimed(DriveDirection.Forward, 600);
-
-        robot.armCombineMotor.setPower(.4);
-        sleep(800);
-        robot.CombineStop();
-        robot.DriveTimed(DriveDirection.Backward, 400);
+        robot.DriveTimed(DriveDirection.Forward, 200);
 
         runtime.reset();
-        while(runtime.milliseconds() < 4000) {
-            robot.ArmExtendIn();
-        }
+       
 
         if (goldPosition == MineralDetector.MineralPosition.Left) {
             robot.DriveTimed(DriveDirection.Left, 400);
             robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
             robot.DriveTimed(DriveDirection.Right, 400);
-            robot.DriveTimed(DriveDirection.Forward, 1000);
+            robot.DriveTimed(DriveDirection.Forward, 950);
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
             robot.DriveTimed(DriveDirection.Forward, 900);
