@@ -159,10 +159,10 @@ public class CraterSide extends LinearOpMode {
        
 
         if (goldPosition == MineralDetector.MineralPosition.Left) {
-            robot.DriveTimed(DriveDirection.Left, 400);
+            robot.DriveTimed(DriveDirection.Left, 385);
             robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
-            robot.DriveTimed(DriveDirection.Right, 400);
+            robot.DriveTimed(DriveDirection.Right, 385);
             robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
