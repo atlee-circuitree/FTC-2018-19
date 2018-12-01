@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "hardwareTest 2018", group = "Linear Opmode")
-
+@Disabled
 public class hardwareTest extends LinearOpMode {
 
 
