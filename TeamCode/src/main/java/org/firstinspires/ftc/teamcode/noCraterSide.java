@@ -169,7 +169,7 @@ public class noCraterSide extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
             robot.DriveTimed(DriveDirection.Right, 400);
-            robot.DriveTimed(DriveDirection.Forward, 950);
+            robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
             robot.DriveTimed(DriveDirection.Forward, 900);
