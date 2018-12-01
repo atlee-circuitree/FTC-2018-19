@@ -107,7 +107,7 @@ public class noCraterSide extends LinearOpMode {
 
         runtime.reset();
 
-        while (opModeIsActive() && runtime.milliseconds() < 2000){
+        while (opModeIsActive() && runtime.milliseconds() < 3000){
                 robot.armReleaseServo.setPosition(0);
         }
         robot.armReleaseServo.setPwmDisable();
@@ -152,12 +152,12 @@ public class noCraterSide extends LinearOpMode {
 
 	
         runtime.reset();
-        robot.DriveTimed(DriveDirection.Forward, 600);
+        robot.DriveTimed(DriveDirection.Forward, 400);
 
         robot.armCombineMotor.setPower(.4);
         sleep(800);
         robot.CombineStop();
-        robot.DriveTimed(DriveDirection.Backward, 400);
+        robot.DriveTimed(DriveDirection.Backward, 200);
 
         runtime.reset();
         while(runtime.milliseconds() < 4000) {

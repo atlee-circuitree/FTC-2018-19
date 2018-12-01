@@ -44,7 +44,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name = "ONLY_crater_side_auto", group = "Linear Opmode")
-@Disabled
+//@Disabled
 public class CraterSide extends LinearOpMode {
 
 
@@ -92,7 +92,7 @@ public class CraterSide extends LinearOpMode {
 
         boolean dropStageCompleted = false;
         int dropPosition = 21000;
-        int jointRaisePosition = 1600;  //1400 - better height for collecting
+        int jointRaisePosition = 2600;  //1400 - better height for collecting
         int extendOutPosition = 0;
 
         //run climb motor until we've dropped
@@ -163,7 +163,7 @@ public class CraterSide extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
             robot.DriveTimed(DriveDirection.Right, 400);
-            robot.DriveTimed(DriveDirection.Forward, 950);
+            robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
             robot.DriveTimed(DriveDirection.Forward, 900);
