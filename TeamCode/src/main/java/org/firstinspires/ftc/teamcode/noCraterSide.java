@@ -154,7 +154,7 @@ public class noCraterSide extends LinearOpMode {
         runtime.reset();
         robot.DriveTimed(DriveDirection.Forward, 600);
 
-        robot.armCombineMotor.setPower(.2);
+        robot.armCombineMotor.setPower(.4);
         sleep(800);
         robot.CombineStop();
         robot.DriveTimed(DriveDirection.Backward, 400);
