@@ -155,18 +155,18 @@ public class noCraterSide extends LinearOpMode {
         robot.DriveTimed(DriveDirection.Forward, 400);
 
         //lower arm for depositing the marker
-        while (robot.armJointMotor.getCurrentPosition() >= 1200)
+        while (robot.armJointMotor.getCurrentPosition() >= 1100)
         {
             robot.ArmJointDrop();
         }
 
 
-        robot.armCombineMotor.setPower(.4);
+        robot.armCombineMotor.setPower(.8);
         sleep(800);
         robot.CombineStop();
         robot.DriveTimed(DriveDirection.Backward, 200);
 
-        while (robot.armJointMotor.getCurrentPosition() <= 1600)
+        while (robot.armJointMotor.getCurrentPosition() <= 1000)
             {
                 robot.ArmJointRaise();
             }
