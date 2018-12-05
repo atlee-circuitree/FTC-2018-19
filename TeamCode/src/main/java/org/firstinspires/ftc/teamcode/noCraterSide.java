@@ -92,7 +92,7 @@ public class noCraterSide extends LinearOpMode {
         boolean dropStageCompleted = false;
         int dropPosition = 21000;
         int jointRaisePosition = 1600;  //1400 - better height for collecting
-        int extendOutPosition = 10000;
+        int extendOutPosition = 14000;
 
         //run climb motor until we've dropped
         while (opModeIsActive() && robot.climbMotor.getCurrentPosition() < dropPosition) {
@@ -155,18 +155,18 @@ public class noCraterSide extends LinearOpMode {
         robot.DriveTimed(DriveDirection.Forward, 400);
 
         //lower arm for depositing the marker
-        while (robot.armJointMotor.getCurrentPosition() >= 1100)
+        while (robot.armJointMotor.getCurrentPosition() >= 1300)
         {
             robot.ArmJointDrop();
         }
         robot.ArmJointStop();
 
         robot.armCombineMotor.setPower(.8);
-        sleep(800);
+        sleep(1600);
         robot.CombineStop();
         robot.DriveTimed(DriveDirection.Backward, 200);
 
-        while (robot.armJointMotor.getCurrentPosition() <= 1300)
+        while (robot.armJointMotor.getCurrentPosition() <= 1400)
             {
                 robot.ArmJointRaise();
             }
@@ -181,15 +181,21 @@ public class noCraterSide extends LinearOpMode {
         if (goldPosition == MineralDetector.MineralPosition.Left) {
             robot.DriveTimed(DriveDirection.Left, 400);
             robot.DriveTimed(DriveDirection.Forward, 1000);
+            robot.DriveTimed(DriveDirection.Backward, 1000);
+            robot.DriveTimed(DriveDirection.Right, 400);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
             robot.DriveTimed(DriveDirection.Right, 400);
             robot.DriveTimed(DriveDirection.Forward, 1000);
-        } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
+            robot.DriveTimed(DriveDirection.Backward, 1000);
+            robot.DriveTimed(DriveDirection.Left, 400);
+        } else if (goldPosition == MineralDetector.MineralPosition.Center) //golkd center
         {
             robot.DriveTimed(DriveDirection.Forward, 900);
+            robot.DriveTimed(DriveDirection.Backward, 900);
         } else
         {
            robot.DriveTimed(DriveDirection.Forward, 900);
+           robot.DriveTimed(DriveDirection.Backward, 900);
         }
 
         robot.StopAll();
