@@ -198,6 +198,9 @@ public class noCraterSide extends LinearOpMode {
            robot.DriveTimed(DriveDirection.Backward, 900);
         }
 
+	robot.Rotate(45,.5);
+	robot.DriveForwardCheckObstruction(2000);
+	
         robot.StopAll();
         mineralDetector.Shutdown();
     }
