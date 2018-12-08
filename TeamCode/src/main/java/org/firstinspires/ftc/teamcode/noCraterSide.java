@@ -92,7 +92,7 @@ public class noCraterSide extends LinearOpMode {
         boolean dropStageCompleted = false;
         int dropPosition = 21000;
         int jointRaisePosition = 1600;  //1400 - better height for collecting
-        int extendOutPosition = 14000;
+        int extendOutPosition = 12000;
 
         //run climb motor until we've dropped
         while (opModeIsActive() && robot.climbMotor.getCurrentPosition() < dropPosition) {
