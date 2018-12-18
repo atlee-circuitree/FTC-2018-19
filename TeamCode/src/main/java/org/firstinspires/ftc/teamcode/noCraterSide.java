@@ -51,7 +51,7 @@ public class noCraterSide extends LinearOpMode {
     hardware2018 robot = new hardware2018();
     MineralDetector mineralDetector = new MineralDetector();
     private ElapsedTime runtime = new ElapsedTime();
-    Drop18 drop18 = null;
+
 
     @Override
     public void runOpMode() {
@@ -63,9 +63,8 @@ public class noCraterSide extends LinearOpMode {
 
         mineralDetector.init(hardwareMap, telemetry);
 
-        drop18 = new Drop18(robot, mineralDetector, telemetry, this);
 
-        robot.armCombineServo.setPosition(0.5);
+        //robot.armCombineServo.setPosition(0.5);
 
         MineralDetector.MineralPosition goldPosition = MineralDetector.MineralPosition.Unknown;
         MineralDetector.MineralPosition tempPosition = MineralDetector.MineralPosition.Unknown;
@@ -89,31 +88,114 @@ public class noCraterSide extends LinearOpMode {
         double armCombineOpenEndTime = 0;
 
         //drops robot
-        drop18.dropBot();
+
+        boolean dropStageCompleted = false;
+        int dropPosition = 21000;
+        int jointRaisePosition = 1600;  //1400 - better height for collecting
+        int extendOutPosition = 12000;
+
+        //run climb motor until we've dropped
+        while (opModeIsActive() && robot.climbMotor.getCurrentPosition() < dropPosition) {
+            robot.climbMotor.setPower(1);
+        }
+        robot.StopAll();
+
+        //Timing based forward movement
+        runtime.reset();
+
+        robot.DriveTimed(DriveDirection.Forward, 200);
+
+        runtime.reset();
+
+        while (opModeIsActive() && runtime.milliseconds() < 3000){
+                robot.armReleaseServo.setPosition(0);
+        }
+        robot.armReleaseServo.setPwmDisable();
+        runtime.reset();
+
+
+        //TODO:move this to it's own file to provide same code for the not crater
+        //the dropping part
+        while (opModeIsActive() && !dropStageCompleted) {
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Gold Position", goldPosition);
+
+
+
+            if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
+                    && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
+                    && robot.climbMotor.getCurrentPosition() >= dropPosition) {
+                dropStageCompleted = true;
+            }
+
+
+            if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
+                robot.ArmJointRaise();
+            else
+                robot.ArmJointStop();
+
+            if (runtime.milliseconds() > 2000 && robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
+                robot.ArmExtendOut();
+            else
+                robot.ArmExtendStop();
+
+            // Show the elapsed game time and wheel power.
+            telemetry.update();
+        }
+        //robot.armCombineServo.setPosition(0.7);
+
+
+        telemetry.addData("Gold Position", goldPosition);
+        telemetry.update();
+
+        robot.StopAll();
 
 	
         runtime.reset();
-        robot.DriveTimed(DriveDirection.Forward, 600);
+        robot.DriveTimed(DriveDirection.Forward, 400);
+
+        //lower arm for depositing the marker
+        while (robot.armJointMotor.getCurrentPosition() >= 1300)
+        {
+            robot.ArmJointDrop();
+        }
+        robot.ArmJointStop();
+
+        robot.armCombineMotor.setPower(.8);
+        sleep(1600);
+        robot.CombineStop();
+        robot.DriveTimed(DriveDirection.Backward, 200);
+
+        while (robot.armJointMotor.getCurrentPosition() <= 1400)
+            {
+                robot.ArmJointRaise();
+            }
+            robot.ArmJointStop();
+
 
         runtime.reset();
-        while(runtime.milliseconds() > 4000) {
-            robot.ArmExtendOut();
+        while(runtime.milliseconds() < 4000) {
+            robot.ArmExtendIn();
         }
-        robot.CombineForward();
-        sleep(300);
-        robot.CombineStop();
-        robot.DriveTimed(DriveDirection.Backward, 400);
-
 
         if (goldPosition == MineralDetector.MineralPosition.Left) {
-            robot.DriveTimed(DriveDirection.Left, 450);
-            robot.DriveTimed(DriveDirection.Forward, 700);
+            robot.DriveTimed(DriveDirection.Left, 400);
+            robot.DriveTimed(DriveDirection.Forward, 1000);
+            robot.DriveTimed(DriveDirection.Backward, 1000);
+            robot.DriveTimed(DriveDirection.Right, 400);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
-            robot.DriveTimed(DriveDirection.Right, 450);
-            robot.DriveTimed(DriveDirection.Forward, 700);
-        } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
+            robot.DriveTimed(DriveDirection.Right, 400);
+            robot.DriveTimed(DriveDirection.Forward, 1000);
+            robot.DriveTimed(DriveDirection.Backward, 1000);
+            robot.DriveTimed(DriveDirection.Left, 400);
+        } else if (goldPosition == MineralDetector.MineralPosition.Center) //golkd center
         {
-            robot.DriveTimed(DriveDirection.Forward, 700);
+            robot.DriveTimed(DriveDirection.Forward, 900);
+            robot.DriveTimed(DriveDirection.Backward, 900);
+        } else
+        {
+           robot.DriveTimed(DriveDirection.Forward, 900);
+           robot.DriveTimed(DriveDirection.Backward, 900);
         }
 
         robot.StopAll();

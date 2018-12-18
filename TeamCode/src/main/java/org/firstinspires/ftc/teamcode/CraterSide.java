@@ -29,7 +29,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// code based on BergTest throught the copy/paste paradime (Im saying dont use this)
+// code based on BergTest through the copy/paste paradime (Im saying dont use this). EDIT: looks like we are using this.
 
 package org.firstinspires.ftc.teamcode;
 
@@ -43,9 +43,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Drives arm motors with a controller for testing and positioning the robot for measuring
  */
 
-@Autonomous(name = "Autonomous2018Encoders_2", group = "Linear Opmode")
-@Disabled
-public class AutoEncodersTest2 extends LinearOpMode {
+@Autonomous(name = "ONLY_crater_side_auto", group = "Linear Opmode")
+//@Disabled
+public class CraterSide extends LinearOpMode {
 
 
     // Declare OpMode members.
@@ -64,7 +64,8 @@ public class AutoEncodersTest2 extends LinearOpMode {
 
         mineralDetector.init(hardwareMap, telemetry);
 
-        robot.armCombineServo.setPosition(0.5);
+
+        //robot.armCombineServo.setPosition(0.5);
 
         MineralDetector.MineralPosition goldPosition = MineralDetector.MineralPosition.Unknown;
         MineralDetector.MineralPosition tempPosition = MineralDetector.MineralPosition.Unknown;
@@ -81,15 +82,18 @@ public class AutoEncodersTest2 extends LinearOpMode {
         runtime.reset();
 
         // Setup a variable for each drive wheel to save power level for telemetry
+	//Does not appear to be used for anything right now, has been moved to hardware2018
         double leftPower;
         double rightPower;
         double combineSpeed = 0;
         double armCombineOpenEndTime = 0;
 
+        //drops robot
+
         boolean dropStageCompleted = false;
         int dropPosition = 21000;
-        int jointRaisePosition = 1800;  //1400 - better height for collecting
-        int extendOutPosition = 5000;
+        int jointRaisePosition = 2600;  //1400 - better height for collecting
+        int extendOutPosition = 0;
 
         //run climb motor until we've dropped
         while (opModeIsActive() && robot.climbMotor.getCurrentPosition() < dropPosition) {
@@ -104,84 +108,68 @@ public class AutoEncodersTest2 extends LinearOpMode {
 
         runtime.reset();
 
-        if (goldPosition == MineralDetector.MineralPosition.Center) {
-            while (opModeIsActive() && !dropStageCompleted) {
-                telemetry.addData("Status", "Run Time: " + runtime.toString());
-                telemetry.addData("Gold Position", goldPosition);
-
-                if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
-                        && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
-                        && robot.climbMotor.getCurrentPosition() >= dropPosition) {
-                    dropStageCompleted = true;
-                }
-
-                if (runtime.milliseconds() < 1000)
-                    robot.armReleaseServo.setPosition(0);
-                else
-                    robot.armReleaseServo.setPwmDisable();
-
-                if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
-                    robot.ArmJointRaise();
-                else
-                    robot.ArmJointStop();
-
-                if (robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
-                    robot.ArmExtendOut();
-                else
-                    robot.ArmExtendStop();
-
-                // Show the elapsed game time and wheel power.
-                telemetry.update();
-            }
-        } else {
-            while (opModeIsActive() && !dropStageCompleted) {
-                telemetry.addData("Status", "Run Time: " + runtime.toString());
-                telemetry.addData("Gold Position", goldPosition);
-
-                if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
-                        && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
-                        && robot.climbMotor.getCurrentPosition() >= dropPosition) {
-                    dropStageCompleted = true;
-                }
-
-                if (runtime.milliseconds() < 1000)
-                    robot.armReleaseServo.setPosition(0);
-                else
-                    robot.armReleaseServo.setPwmDisable();
-
-                if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
-                    robot.ArmJointRaise();
-                else
-                    robot.ArmJointStop();
-
-                if (runtime.milliseconds() > 2000 && robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
-                    robot.ArmExtendOut();
-                else
-                    robot.ArmExtendStop();
-
-                // Show the elapsed game time and wheel power.
-                telemetry.update();
-            }
+        while (opModeIsActive() && runtime.milliseconds() < 2000){
+                robot.armReleaseServo.setPosition(0);
         }
+        robot.armReleaseServo.setPwmDisable();
+        runtime.reset();
+
+
+        //TODO:move this to it's own file to provide same code for the not crater
+        //the dropping part
+        while (opModeIsActive() && !dropStageCompleted) {
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Gold Position", goldPosition);
+
+
+
+            if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
+                    && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
+                    && robot.climbMotor.getCurrentPosition() >= dropPosition) {
+                dropStageCompleted = true;
+            }
+
+
+            if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
+                robot.ArmJointRaise();
+            else
+                robot.ArmJointStop();
+
+            if (runtime.milliseconds() > 2000 && robot.armExtendMotor.getCurrentPosition() < extendOutPosition)
+                robot.ArmExtendOut();
+            else
+                robot.ArmExtendStop();
+
+            // Show the elapsed game time and wheel power.
+            telemetry.update();
+        }
+
+
 
         telemetry.addData("Gold Position", goldPosition);
         telemetry.update();
 
         robot.StopAll();
 
+	
         runtime.reset();
         robot.DriveTimed(DriveDirection.Forward, 200);
 
+        runtime.reset();
+       
 
         if (goldPosition == MineralDetector.MineralPosition.Left) {
-            robot.DriveTimed(DriveDirection.Left, 450);
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            robot.DriveTimed(DriveDirection.Left, 385);
+            robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
-            robot.DriveTimed(DriveDirection.Right, 450);
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            robot.DriveTimed(DriveDirection.Right, 385);
+            robot.DriveTimed(DriveDirection.Forward, 1000);
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
-            robot.DriveTimed(DriveDirection.Forward, 800);
+            robot.DriveTimed(DriveDirection.Forward, 900);
+        } else
+        {
+           robot.DriveTimed(DriveDirection.Forward, 900);
         }
 
         robot.StopAll();

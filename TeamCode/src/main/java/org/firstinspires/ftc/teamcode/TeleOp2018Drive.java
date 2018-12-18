@@ -65,7 +65,7 @@ public class TeleOp2018Drive extends LinearOpMode {
         if (gamepad1.dpad_up)
             robot.ResetEncoders();
 
-        robot.armCombineServo.setPosition(0.6);
+        robot.armCombineServo.setPosition(0.7);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -155,7 +155,7 @@ public class TeleOp2018Drive extends LinearOpMode {
             else if (armCombineOpenEndTime < runtime.milliseconds()) //have our 2 seconds passed?
             {
                 armCombineOpenEndTime = 0;
-                robot.armCombineServo.setPosition(0.6);
+                robot.armCombineServo.setPosition(0.7);
             }
             else if (gamepad2.dpad_down || gamepad1.dpad_down) {
                 robot.armCombineServo.setPosition(0);
