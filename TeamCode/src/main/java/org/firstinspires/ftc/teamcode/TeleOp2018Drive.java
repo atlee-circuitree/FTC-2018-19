@@ -96,8 +96,8 @@ public class TeleOp2018Drive extends LinearOpMode {
             rightPower = Range.clip(drive - turn, -1, 1);
 
             if (gamepad1.left_bumper) {
-                leftPower = (leftPower / 2);
-                rightPower = (rightPower / 2);
+                leftPower = (leftPower * .75);
+                rightPower = (rightPower * .75);
             }
 
             // Tank Mode uses one stick to control each wheel.
