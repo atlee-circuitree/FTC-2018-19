@@ -208,22 +208,10 @@ public class noCraterSide_Experimental extends LinearOpMode {
 
         if (goldPosition == MineralDetector.MineralPosition.Left) {
             robot.Rotate(-10, 0.7);
-            robot.DriveTimed(DriveDirection.Backward, 2000);
+            robot.DriveTimed(DriveDirection.Backward, 2500);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
-                robot.Rotate(10, 0.7);
-                robot.ArmJointRaise();
-                robot.DriveTimed(DriveDirection.Backward, 1000);
-                while (robot.armJointMotor.getCurrentPosition() <= 1400)
-                {
-                    robot.ArmJointRaise();
-                }
-                robot.ArmJointStop();
-                robot.Rotate(170, 1);
-                while (robot.armJointMotor.getCurrentPosition() >= 1200)
-                {
-                    robot.ArmJointDrop();
-                }
-                robot.DriveForwardCheckObstruction(1200);
+            robot.Rotate(10, 0.7);
+            robot.DriveTimed(DriveDirection.Backward, 2500);
         } else if (goldPosition == MineralDetector.MineralPosition.Center || goldPosition == MineralDetector.MineralPosition.Unknown) //gold center
         {
             robot.ArmJointRaise();
