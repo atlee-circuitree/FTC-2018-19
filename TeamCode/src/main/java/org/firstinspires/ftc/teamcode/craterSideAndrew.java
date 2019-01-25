@@ -113,11 +113,12 @@ public class craterSideAndrew extends LinearOpMode {
         robot.armReleaseServo.setPwmDisable();
         runtime.reset();
 
-        while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2000)
+        while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() <  3000)
         {
             robot.ArmJointRaise();
         }
         robot.ArmJointStop();
+
 
 
         dropStageCompleted = true;
@@ -136,7 +137,7 @@ public class craterSideAndrew extends LinearOpMode {
         runtime.reset();
 
 
-        if (goldPosition == MineralDetector.MineralPosition.Left) {
+              if (goldPosition == MineralDetector.MineralPosition.Left) {
             robot.DriveTimed(DriveDirection.Left, 385);
             robot.DriveTimed(DriveDirection.Forward, 1000);
             sampleLeft = true;
@@ -152,13 +153,13 @@ public class craterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Forward, 900);
             sampleCenter = true;
         }
-               //Go's back to it's original position after sampling
+        //Go's back to it's original position after sampling
         if (sampleLeft == true) {
-            robot.DriveTimed(DriveDirection.Right, 385);
-            robot.DriveTimed(DriveDirection.Backward, 1000);
+            robot.DriveTimed(DriveDirection.Left, 385);
+            robot.DriveTimed(DriveDirection.Backward, 900);
         } else if (sampleRight == true) {
             robot.DriveTimed(DriveDirection.Right, 385);
-            robot.DriveTimed(DriveDirection.Backward, 1000);
+            robot.DriveTimed(DriveDirection.Backward, 900);
         } else if (sampleCenter == true) {
             robot.DriveTimed(DriveDirection.Backward, 900);
         } else {
@@ -172,6 +173,9 @@ public class craterSideAndrew extends LinearOpMode {
         // robot.DriveTimed(DriveDirection.Left, 500);
         // sleep (1200);
         // robot.DriveTimed(
+        // robot.ArmExtendOut();
+        // sleep (1000);
+        // robot.StopAll();
         robot.StopAll();
         mineralDetector.Shutdown();
     }

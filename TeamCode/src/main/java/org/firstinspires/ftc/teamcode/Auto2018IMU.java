@@ -57,7 +57,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
  */
 
 @Autonomous(name = "Autonomous2018IMU", group = "Linear Opmode")
-@Disabled
+//@Disabled
 public class Auto2018IMU extends LinearOpMode {
 
     // The IMU sensor object
