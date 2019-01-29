@@ -145,7 +145,7 @@ public class craterSideAndrew extends LinearOpMode {
             sampleRight = true;
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
-            robot.DriveTimed(DriveDirection.Forward, 700);
+            robot.DriveTimed(DriveDirection.Forward, 600);
             sampleCenter = true;
         } else {
             robot.DriveTimed(DriveDirection.Forward, 900);
@@ -166,7 +166,7 @@ public class craterSideAndrew extends LinearOpMode {
             robot.armCombineMotor.setPower(0);
             robot.DriveTimed(DriveDirection.Backward, 2400);
         } else if (sampleRight == true) {
-            robot.DriveTimed(DriveDirection.Backward, 970);
+            robot.DriveTimed(DriveDirection.Backward, 800);
             robot.DriveTimed(DriveDirection.Left, 900);
             robot.DriveForwardCheckObstruction(1400);
             robot.DriveTimed(DriveDirection.Left, 470);
@@ -183,9 +183,10 @@ public class craterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Backward, 2100);
         } else if (sampleCenter == true) {
             robot.DriveTimed(DriveDirection.Backward, 750);
-            robot.DriveTimed(DriveDirection.Left, 620);
-            robot.DriveForwardCheckObstruction(1400);
-            robot.DriveTimed(DriveDirection.Left, 460);
+            robot.DriveTimed(DriveDirection.Left, 650);
+            robot.DriveTimed(DriveDirection.Forward, 500);
+            robot.DriveForwardCheckObstruction(900);
+            robot.DriveTimed(DriveDirection.Left, 400);
             robot.ArmJointDrop();
             robot.DriveTimed(DriveDirection.Forward, 1250);
             while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1070) {
@@ -196,7 +197,7 @@ public class craterSideAndrew extends LinearOpMode {
             robot.armCombineMotor.setPower(.75);
             sleep(800);
             robot.armCombineMotor.setPower(0);
-            robot.DriveTimed(DriveDirection.Backward, 2400);
+            robot.DriveTimed(DriveDirection.Backward, 2550);
         } else {
             robot.DriveTimed(DriveDirection.Backward, 750);
             robot.DriveTimed(DriveDirection.Left, 620);
