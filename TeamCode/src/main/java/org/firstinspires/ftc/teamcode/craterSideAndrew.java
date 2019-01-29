@@ -137,11 +137,11 @@ public class craterSideAndrew extends LinearOpMode {
 
         if (goldPosition == MineralDetector.MineralPosition.Left) {
             robot.DriveTimed(DriveDirection.Left, 385);
-            robot.DriveTimed(DriveDirection.Forward, 900);
+            robot.DriveTimed(DriveDirection.Forward, 800);
             sampleLeft = true;
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {
-            robot.DriveTimed(DriveDirection.Right, 385);
-            robot.DriveTimed(DriveDirection.Forward, 1000);
+            robot.DriveTimed(DriveDirection.Right, 380);
+            robot.DriveTimed(DriveDirection.Forward, 900);
             sampleRight = true;
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
@@ -151,34 +151,28 @@ public class craterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Forward, 900);
             sampleCenter = true;
         }
-        //Go's back to it's original position after sampling
         if (sampleLeft == true) {
             robot.DriveTimed(DriveDirection.Left, 530);
             robot.ArmJointDrop();
-            robot.DriveTimed(DriveDirection.Forward, 1200);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1200) {
+            robot.DriveTimed(DriveDirection.Forward, 1300);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1070) {
                 robot.ArmJointDrop();
             }
             robot.ArmJointStop();
-            robot.DriveTimed(DriveDirection.Forward, 850);
-
-
+            robot.DriveTimed(DriveDirection.Forward, 800);
             robot.armReleaseServo.setPwmDisable();
             robot.armCombineMotor.setPower(.75);
             sleep(500);
             robot.armCombineMotor.setPower(0);
             robot.DriveTimed(DriveDirection.Backward, 2400);
         } else if (sampleRight == true) {
-            robot.DriveTimed(DriveDirection.Backward, 700);
-        } else if (sampleCenter == true) {
-            robot.DriveTimed(DriveDirection.Backward, 750);
-            robot.DriveTimed(DriveDirection.Left, 550);
-            //robot.DriveTimed(DriveDirection.Forward, 1400);
+            robot.DriveTimed(DriveDirection.Backward, 970);
+            robot.DriveTimed(DriveDirection.Left, 900);
             robot.DriveForwardCheckObstruction(1400);
             robot.DriveTimed(DriveDirection.Left, 470);
             robot.ArmJointDrop();
-            robot.DriveTimed(DriveDirection.Forward, 1000);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1200) {
+            robot.DriveTimed(DriveDirection.Forward, 1170);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1070) {
                 robot.ArmJointDrop();
             }
             robot.ArmJointStop();
@@ -186,21 +180,42 @@ public class craterSideAndrew extends LinearOpMode {
             robot.armCombineMotor.setPower(.75);
             sleep(500);
             robot.armCombineMotor.setPower(0);
+            robot.DriveTimed(DriveDirection.Backward, 2100);
+        } else if (sampleCenter == true) {
+            robot.DriveTimed(DriveDirection.Backward, 750);
+            robot.DriveTimed(DriveDirection.Left, 620);
+            robot.DriveForwardCheckObstruction(1400);
+            robot.DriveTimed(DriveDirection.Left, 460);
+            robot.ArmJointDrop();
+            robot.DriveTimed(DriveDirection.Forward, 1250);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1070) {
+                robot.ArmJointDrop();
+            }
+            robot.ArmJointStop();
+            robot.armReleaseServo.setPwmDisable();
+            robot.armCombineMotor.setPower(.75);
+            sleep(800);
+            robot.armCombineMotor.setPower(0);
             robot.DriveTimed(DriveDirection.Backward, 2400);
         } else {
-            robot.DriveTimed(DriveDirection.Backward, 900);
+            robot.DriveTimed(DriveDirection.Backward, 750);
+            robot.DriveTimed(DriveDirection.Left, 620);
+            robot.DriveForwardCheckObstruction(1400);
+            robot.DriveTimed(DriveDirection.Left, 460);
+            robot.ArmJointDrop();
+            robot.DriveTimed(DriveDirection.Forward, 1250);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1200) {
+                robot.ArmJointDrop();
+            }
+            robot.ArmJointStop();
+            robot.armReleaseServo.setPwmDisable();
+            robot.armCombineMotor.setPower(.75);
+            sleep(800);
+            robot.armCombineMotor.setPower(0);
+            robot.DriveTimed(DriveDirection.Backward, 2400);
         }
 
-        // EXPERIMENTAL CODE
-        // robot.DriveTimed(DriveDirection.Left, 600);
-        // sleep (600);
-        // robot.DriveTimed(DriveDirection.Forward, 1200);
-        // robot.DriveTimed(DriveDirection.Left, 500);
-        // sleep (1200);
-        // robot.DriveTimed(
-        // robot.ArmExtendOut();
-        // sleep (1000);
-        // robot.StopAll();
+
         robot.StopAll();
         mineralDetector.Shutdown();
     }
