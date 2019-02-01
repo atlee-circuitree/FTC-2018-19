@@ -181,16 +181,32 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
 
         //Sample
         if (goldPosition == MineralDetector.MineralPosition.Left) { //gold left
-            robot.DriveTimed(DriveDirection.Left, 400);
-            robot.DriveTimed(DriveDirection.Forward, 1200);
-            robot.DriveTimed(DriveDirection.Right, 400);
-            robot.DriveTimed(DriveDirection.Forward, 400);
-            robot.DriveTimed(DriveDirection.Left, 200);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2800) {
+                robot.ArmJointRaise();
+            }
+            robot.ArmJointStop();
+            robot.DriveTimed(DriveDirection.Left, 300);
+            robot.DriveTimed(DriveDirection.Forward, 1300);
+            robot.DriveTimed(DriveDirection.Right, 465);
+            robot.DriveTimed(DriveDirection.Forward, 470);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1300) {
+                robot.ArmJointDrop();
+            }
+            robot.ArmJointStop();
+            robot.armCombineMotor.setPower(.75);
+            sleep(1000);
+            robot.armCombineMotor.setPower(0);
+            robot.DriveTimed(DriveDirection.Right, 80);
+            robot.DriveTimed(DriveDirection.Backward, 2100);
         } else if (goldPosition == MineralDetector.MineralPosition.Right) {  //gold right
             robot.DriveTimed(DriveDirection.Right, 350);
             robot.DriveTimed(DriveDirection.Forward, 1000);
             robot.DriveTimed(DriveDirection.Backward, 1000);
             robot.DriveTimed(DriveDirection.Left, 400);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1300) {
+                robot.ArmJointDrop();
+            }
+            robot.ArmJointStop();
         } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
         {
             while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 1300) {
@@ -206,7 +222,7 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
                 robot.ArmJointRaise();
             }
             robot.ArmJointStop();
-            robot.DriveTimed(DriveDirection.Left, 700);
+            robot.DriveTimed(DriveDirection.Left, 800);
             while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2600) {
                 robot.ArmJointRaise();
             }
@@ -215,8 +231,27 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Left, 400);
             robot.DriveTimed(DriveDirection.Forward, 800);
         } else {
-            robot.DriveTimed(DriveDirection.Forward, 900);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 1300) {
+                robot.ArmJointRaise();
+            }
+            robot.ArmJointStop();
+            robot.DriveTimed(DriveDirection.Forward, 1300);
+            robot.armCombineMotor.setPower(.75);
+            sleep(1000);
+            robot.armCombineMotor.setPower(0);
             robot.DriveTimed(DriveDirection.Backward, 900);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2200) {
+                robot.ArmJointRaise();
+            }
+            robot.ArmJointStop();
+            robot.DriveTimed(DriveDirection.Left, 800);
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2600) {
+                robot.ArmJointRaise();
+            }
+            robot.ArmJointStop();
+            robot.DriveTimed(DriveDirection.Forward, 1400);
+            robot.DriveTimed(DriveDirection.Left, 400);
+            robot.DriveTimed(DriveDirection.Forward, 800);
         }
 
 
