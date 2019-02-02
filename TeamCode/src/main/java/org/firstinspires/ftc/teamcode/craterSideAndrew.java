@@ -91,7 +91,8 @@ public class craterSideAndrew extends LinearOpMode {
 
         boolean dropStageCompleted = false;
         int dropPosition = 21000;
-        int jointRaisePosition = 2600;  //1400 - better height for collecting
+        int jointRaisePosition = 2400;  //1400 - better height for collecting
+        int jointDropPosition = 1400; //height for dropping marker
         int extendOutPosition = 0;
 
         //run climb motor until we've dropped
@@ -113,7 +114,7 @@ public class craterSideAndrew extends LinearOpMode {
         robot.armReleaseServo.setPwmDisable();
         runtime.reset();
 
-        while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2800) {
+        while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < jointRaisePosition) {
             robot.ArmJointRaise();
         }
         robot.ArmJointStop();
@@ -157,7 +158,7 @@ public class craterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Forward, 600);
             robot.DriveTimed(DriveDirection.Left, 430);
             robot.DriveTimed(DriveDirection.Forward, 1400);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1300) {
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > jointDropPosition) {
                 robot.ArmJointDrop();
             }
             robot.ArmJointStop();
@@ -174,7 +175,7 @@ public class craterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Left, 400);
             robot.ArmJointDrop();
             robot.DriveTimed(DriveDirection.Forward, 1250);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1300) {
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > jointDropPosition) {
                 robot.ArmJointDrop();
             }
             robot.ArmJointStop();
@@ -191,7 +192,7 @@ public class craterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Left, 600);
             robot.ArmJointDrop();
             robot.DriveTimed(DriveDirection.Forward, 1350);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1300) {
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > jointDropPosition) {
                 robot.ArmJointDrop();
             }
             robot.ArmJointStop();
