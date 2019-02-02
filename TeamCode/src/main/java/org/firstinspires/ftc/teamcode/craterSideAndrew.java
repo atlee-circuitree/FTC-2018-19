@@ -169,7 +169,7 @@ public class craterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Backward, 2400);
         } else if (sampleRight == true) {                                        //Right
             robot.DriveTimed(DriveDirection.Backward, 500);
-            robot.DriveTimed(DriveDirection.Left, 1050);
+            robot.DriveTimed(DriveDirection.Left, 1100);
             robot.DriveTimed(DriveDirection.Forward, 1670);
             robot.DriveTimed(DriveDirection.Left, 400);
             robot.ArmJointDrop();
@@ -187,7 +187,7 @@ public class craterSideAndrew extends LinearOpMode {
         } else if (sampleCenter == true) {                                       //Center
             robot.DriveTimed(DriveDirection.Backward, 600);
             robot.DriveTimed(DriveDirection.Left, 570);
-            robot.DriveTimed(DriveDirection.Forward, 1300);
+            robot.DriveTimed(DriveDirection.Forward, 1200);
             robot.DriveTimed(DriveDirection.Left, 600);
             robot.ArmJointDrop();
             robot.DriveTimed(DriveDirection.Forward, 1350);
