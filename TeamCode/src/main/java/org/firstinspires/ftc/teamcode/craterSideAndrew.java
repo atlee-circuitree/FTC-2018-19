@@ -154,7 +154,7 @@ public class craterSideAndrew extends LinearOpMode {
         if (sampleLeft == true) {                                                //Left
             robot.DriveTimed(DriveDirection.Left, 530);
             robot.ArmJointDrop();
-            robot.DriveTimed(DriveDirection.Forward, 700);
+            robot.DriveTimed(DriveDirection.Forward, 600);
             robot.DriveTimed(DriveDirection.Left, 430);
             robot.DriveTimed(DriveDirection.Forward, 1300);
             while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1200) {
@@ -168,8 +168,8 @@ public class craterSideAndrew extends LinearOpMode {
             robot.DriveTimed(DriveDirection.Left, 50);
             robot.DriveTimed(DriveDirection.Backward, 2400);
         } else if (sampleRight == true) {                                        //Right
-            robot.DriveTimed(DriveDirection.Backward, 400);
-            robot.DriveTimed(DriveDirection.Left, 1000);
+            robot.DriveTimed(DriveDirection.Backward, 500);
+            robot.DriveTimed(DriveDirection.Left, 1100);
             robot.DriveTimed(DriveDirection.Forward, 1600);
             robot.DriveTimed(DriveDirection.Left, 400);
             robot.ArmJointDrop();
@@ -187,8 +187,8 @@ public class craterSideAndrew extends LinearOpMode {
         } else if (sampleCenter == true) {                                       //Center
             robot.DriveTimed(DriveDirection.Backward, 600);
             robot.DriveTimed(DriveDirection.Left, 570);
-            robot.DriveTimed(DriveDirection.Forward, 1350);
-            robot.DriveTimed(DriveDirection.Left, 600);
+            robot.DriveTimed(DriveDirection.Forward, 1300);
+            robot.DriveTimed(DriveDirection.Left, 730);
             robot.ArmJointDrop();
             robot.DriveTimed(DriveDirection.Forward, 1350);
             while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1200) {
