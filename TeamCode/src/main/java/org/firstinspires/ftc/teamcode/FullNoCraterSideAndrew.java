@@ -63,6 +63,8 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
 
         mineralDetector.init(hardwareMap, telemetry);
 
+        int jointRaisePosition = 2400;  //1400 - better height for collecting
+        int jointDropPosition = 1350; //height for dropping marker
 
         //robot.armCombineServo.setPosition(0.5);
 
@@ -90,8 +92,8 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
         //drops robot
 
         boolean dropStageCompleted = false;
-        int dropPosition = 21000;
-        int jointRaisePosition = 1600;  //1400 - better height for collecting
+        int dropPosition = 22000;
+        int jointRaisePositionRight = 1600;  //1400 - better height for collecting
         int extendOutPosition = 12000;
 
         //run climb motor until we've dropped
@@ -121,14 +123,14 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
                 telemetry.addData("Gold Position", goldPosition);
 
 
-                if (robot.armJointMotor.getCurrentPosition() >= jointRaisePosition
+                if (robot.armJointMotor.getCurrentPosition() >= jointRaisePositionRight
                         && robot.armExtendMotor.getCurrentPosition() >= extendOutPosition
                         ) {
                     dropStageCompleted = true;
                 }
 
 
-                if (robot.armJointMotor.getCurrentPosition() < jointRaisePosition)
+                if (robot.armJointMotor.getCurrentPosition() < jointRaisePositionRight)
                     robot.ArmJointRaise();
                 else
                     robot.ArmJointStop();
@@ -170,7 +172,7 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
             }
             robot.ArmExtendStop();
             //robot.ArmJointRaise();
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2400) {
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < jointRaisePosition) {
                 robot.ArmJointRaise();
             }
             robot.ArmJointStop();
@@ -181,13 +183,13 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
 
         //Sample
         if (goldPosition == MineralDetector.MineralPosition.Left) { //gold left
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2800) {
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < jointRaisePosition) {
                 robot.ArmJointRaise();
             }
             robot.ArmJointStop();
             robot.DriveTimed(DriveDirection.Left, 300);
             robot.DriveTimed(DriveDirection.Forward, 1270);
-            robot.DriveTimed(DriveDirection.Right, 565);
+            robot.DriveTimed(DriveDirection.Right, 700);
             robot.DriveTimed(DriveDirection.Forward, 470);
             while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > 1300) {
                 robot.ArmJointDrop();
@@ -207,7 +209,7 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
                 robot.ArmJointDrop();
             }
             robot.ArmJointStop();
-        } else if (goldPosition == MineralDetector.MineralPosition.Center) //gold center
+        } else if (goldPosition == MineralDetector.MineralPosition.Center || goldPosition == MineralDetector.MineralPosition.Unknown) //gold center
         {
             while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 1300) {
                 robot.ArmJointRaise();
@@ -218,40 +220,18 @@ public class FullNoCraterSideAndrew extends LinearOpMode {
             sleep(1000);
             robot.armCombineMotor.setPower(0);
             robot.DriveTimed(DriveDirection.Backward, 900);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2200) {
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2100) {
                 robot.ArmJointRaise();
             }
             robot.ArmJointStop();
             robot.DriveTimed(DriveDirection.Left, 800);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2600) {
+            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < jointRaisePosition) {
                 robot.ArmJointRaise();
             }
             robot.ArmJointStop();
             robot.DriveTimed(DriveDirection.Forward, 1550);
             //robot.DriveTimed(DriveDirection.Left, 400);
             //robot.DriveTimed(DriveDirection.Forward, 800);
-        } else {
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 1300) {
-                robot.ArmJointRaise();
-            }
-            robot.ArmJointStop();
-            robot.DriveTimed(DriveDirection.Forward, 1300);
-            robot.armCombineMotor.setPower(.75);
-            sleep(1000);
-            robot.armCombineMotor.setPower(0);
-            robot.DriveTimed(DriveDirection.Backward, 900);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2200) {
-                robot.ArmJointRaise();
-            }
-            robot.ArmJointStop();
-            robot.DriveTimed(DriveDirection.Left, 800);
-            while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() < 2600) {
-                robot.ArmJointRaise();
-            }
-            robot.ArmJointStop();
-            robot.DriveTimed(DriveDirection.Forward, 1400);
-            robot.DriveTimed(DriveDirection.Left, 400);
-            robot.DriveTimed(DriveDirection.Forward, 800);
         }
 
 
