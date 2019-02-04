@@ -171,10 +171,10 @@ public class craterSideAndrew extends LinearOpMode {
         } else if (sampleRight == true) {                                        //Right
             robot.DriveTimed(DriveDirection.Backward, 700);
             robot.DriveTimed(DriveDirection.Left, 1000);
-            robot.DriveTimed(DriveDirection.Forward, 1670);
+            robot.DriveTimed(DriveDirection.Forward, 1600);
             robot.DriveTimed(DriveDirection.Left, 300);
             robot.ArmJointDrop();
-            robot.DriveTimed(DriveDirection.Forward, 1250);
+            robot.DriveTimed(DriveDirection.Forward, 1150);
             while (opModeIsActive() && robot.armJointMotor.getCurrentPosition() > jointDropPosition) {
                 robot.ArmJointDrop();
             }
